@@ -1,0 +1,90 @@
+{extend name="public/base"}
+
+{block name="title"}BASE64编码解码{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/index.html">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/tools">工具箱</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Sojson v4 解密</li>
+                            </ol>
+                        </nav>
+                        <a href="/tools" class="btn btn-outline-primary btn-rounded">
+                            <i class="ti-angle-left mr-2"></i> 返回
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="">
+                                <div class="form-group">
+                                    <textarea placeholder="请输入加密后的Sojson.v4" id="code" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button id="decode" type="button" class="btn btn-primary m-r-15">开始破解</button>
+                                    <button onclick="js_format()" type="button" class="btn btn-primary">美化代码</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="结果" id="str" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/tools/jsbeautify.js"}
+<script>
+
+
+    $("#decode").click(function () {
+        let code=$.trim($("#code").val());
+        if(code==""){
+            toastr.warning("请输入密文");
+        }
+        $("#str").val(decode(code));
+    });
+    function js_format() {
+        $("#str").val(js_beautify($("#str").val(),2,'   '));
+    }
+    function decode(str) {
+        if(str.indexOf(['sojson.v4'])==-1){
+            toastr.warning("Given code is not encoded as Sojson v4.");
+            return "";
+        }
+        try {
+            let head = "(['sojson.v4']+[])[\"constructor\"]['fromCharCode']['apply']",
+                foot = "\"['split'](/[a-zA-Z]{1,}/))";
+            str = unescape(str.replace(/(\\x)/gi, '%'));
+            return "/*\n*Aman - 194nb.com\n*/\n"+eval(str.substring(str.indexOf(head), str.indexOf(foot) + foot.length));
+        }catch (e) {
+            toastr.error("抱歉，破解失败了:"+e.message);
+        }
+    }
+
+</script>
+{/block}

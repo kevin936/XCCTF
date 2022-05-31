@@ -1,0 +1,318 @@
+{extend name="public/base"}
+
+{block name="title"}文章投稿{/block}
+{block name="header"}{/block}
+{block name="css"}
+
+<style>
+    .btn.btn-md {
+        padding: 10px 26px;
+        font-size: 14px;
+    }
+
+    .btn-info {
+        color: #fff;
+        background-color: #0297f8;
+        border-color: #0297f8;
+    }
+    .btn-warning {
+        color: #fff;
+        background-color: #f39c12;
+        border-color: #f39c12;
+    }
+    .mr-1 {
+        margin-right: 5px !important;
+    }
+    .btn {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        border: 1px solid transparent;
+    }
+    .btn-success {
+        color: #fff;
+        background-color: #18bc9c;
+        border-color: #18bc9c;
+    }
+
+
+</style>
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-9 m-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-text font-size-26 font-weight-bold m-b-20">{$article.title}</h2>
+                            <p class="card-text">
+                                <a class="text-muted mr-2"><i class="fa fa-user-o"></i> {$article.uid.username}</a>
+                                <span class="text-muted mr-2"><i class="fa fa-clock-o"></i> {$article.create_time|date='Y-m-d'}</span>
+                                <span class="text-muted mr-2"><i class="fa fa-eye"></i> {$article.browsing}</span>
+                                <span class="text-muted mr-2"><i class="fa fa-comments-o"></i> {$article.comment_count}</span>
+                                {if condition="$article.uid.uid eq session('uid')"}
+                                <a href="/article/editcontribute/id/{$article.id}" class="text-primary float-right"><i class="fa fa-pencil-square-o"></i> 编辑</a>
+                                {/if}
+                            </p>
+                            <hr>
+                            <article role="article">
+                                {$article.content|raw}
+                            </article>
+                        </div>
+
+                        <!--begin:点赞打赏-->
+
+                        <div class="entry-meta text-center mt-5 mb-4">
+                            <hr>
+                            <a id="zan" href="javascript:void(0);" class="btn btn-md btn-info btn-like mr-1" cid="{$article.id}" data-name="command"><i class="fa fa-thumbs-up mr-1"></i> 点赞(<span>{$article.like_count}</span>)</a>
+                            {if condition="session('uid') neq ''"}
+                            {if condition="$article.uid.uid eq session('uid')"}
+
+
+                            {else/}
+
+                            <button type="button" class="btn btn-md btn-success btn-thanks mr-1" data-user-id="{$article.uid.uid}" data-id="{$article.id}" data-type="addon" data-name="command" data-toggle="modal" data-target="#PlayTourl" data-whatever="@mdo"><i class="fa fa-heart mr-1"></i> 打赏</button>
+                            {/if}
+                            {/if}
+                            <a href="javascript:share()" class="btn btn-md btn-warning btn-share mr-1"><i class="fa fa-share-alt mr-1"></i> 分享</a>
+                            <a href="javascript:" class="btn btn-md btn-danger btn-collection" data-title="在线命令" data-image="" data-url=""><i class="fa fa-bookmark mr-1"></i> 收藏</a>
+                        </div>
+
+
+                        <!--end:点赞打赏-->
+                    </div>
+                    <!--评论-->
+                    <div class="card comments" id="comments">
+                        <div class="card-body">
+                            <div class="d-flex m-b-10">
+                                <div>
+                                    <figure class="avatar avatar-sm mr-3">
+                                        <img src="{:session('img')}" class="rounded-circle" alt="..." onerror="this.src='__images__/face.png'">
+                                    </figure>
+                                </div>
+                                <form class="flex-grow-1 commentForm" novalidate="">
+                                    <div class="form-group">
+                                        <textarea required="" name="content" rows="2" class="form-control " style="resize: none" placeholder="友善评论，文明发言！"></textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-primary float-right commentSubmit">吐槽一下</button>
+                                </form>
+                            </div>
+                            <h6 class="card-title text-center">评论（{$article.comment_count}）<hr></h6>
+                            <div>
+                                {volist id="vo" name="commentlist"}
+                                <div class="media mb-4" id="comment-{$vo.id}">
+                                    <div class="d-flex align-items-center">
+                                        <figure class="avatar mr-3 position-relative">
+                                            {if condition="$vo.frame_img neq ''"}
+                                            <img src="{$vo.frame_img}" class="aman-avatar-border" style="left:-19%;top:-13%;width:136%!important;height:125%!important">
+                                            {/if}
+                                            <img src="{$vo.img}" class="aman-avatar-img">
+                                        </figure>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="mb-1">{$vo.username}                                                                       <small class="text-muted">{$vo.create_time}</small>
+                                        </h5>
+                                        <p>{$vo.content}</p>
+                                        <div class="comment-tools mt-4">
+                                            <div>
+                                                {if condition="$vo.from_uid neq session('uid')"}
+                                                <span class="cursor-pointer commentReply  m-r-20" data-id="{$vo.id}" data-toggle="tooltip" data-original-title="Reply">
+                                                    <i class="fa fa-edit"></i> 回复
+                                                </span>
+
+                                                <span id="commentzan" class=" cursor-pointer commentLike" data-num="0" data-id="{$vo.id}" href="#" data-toggle="tooltip" data-original-title="Like">
+                                                    <i class="fa fa-thumbs-o-up"></i> <span>{$vo.like_count}</span>
+                                                </span>
+                                                {else/}
+                                                <div class="comment-tools mt-4">
+                                                    <div>
+                                                        <span id="commentzan" class=" cursor-pointer commentLike" data-num="0" data-id="{$vo.id}" href="#" data-toggle="tooltip" data-original-title="Like">
+                                                    <i class="fa fa-thumbs-o-up"></i> <span>{$vo.like_count}</span>
+                                                    </span>
+                                                        <span class="text-danger cursor-pointer commentDel m-l-10" data-id="{$vo.id}" href="#" data-toggle="tooltip" data-original-title="Del">
+                                                                <i class="fa fa-trash"></i> <span>删除</span>
+                                                            </span>
+
+
+                                                    </div>
+                                                </div>
+                                                {/if}
+
+
+                                            </div>
+                                        </div>
+                                        <!--begin:评论回复-->
+                                        {volist id="reply" name="$vo.replys"}
+                                        <div class="border p-3 mt-4 border-radius-1">
+                                            <div class="media" id="comment-{$reply.id}">
+                                                <figure class="avatar mr-3 position-relative">
+                                                    {if condition="$reply.from_id.frame_img neq ''" }
+                                                    <img src="{$reply.from_id.frame_img}" class="aman-avatar-border" style="left:-19%;top:-13%;width:136%!important;height:125%!important">
+                                                    {/if}
+                                                    <img src="{$reply.from_id.img}" class="aman-avatar-img">
+                                                </figure>
+                                                <div class="media-body">
+                                                    <h5 class="font-size-16">
+                                                        {$reply.from_id.username}
+                                                        <small class="text-muted">{$reply.create_time}</small>
+                                                    </h5>
+                                                    <p class="font-size-13"> {$reply.content}</p>
+                                                    <div class="comment-tools ">
+                                                        {if condition="$reply.from_id.uid neq session('uid')"}
+                                                        <span class="cursor-pointer commentReply m-r-20" data-id="{$reply.id}" data-num="0" data-toggle="tooltip" data-original-title="Reply">
+                                                                <i class="fa fa-edit"></i> 回复
+                                                            </span>
+
+                                                        <span class="cursor-pointer replyLike" data-id="{$reply.id}" data-toggle="tooltip" data-original-title="Like">
+                                                                <i class="fa fa-thumbs-o-up"></i> <span>{$reply.like_count}</span>
+                                                            </span>
+                                                        {else/}
+                                                        <div class="comment-tools mt-4">
+                                                            <div>
+                                                        <span id="replyzan" class=" cursor-pointer replyLike" data-num="0" data-id="{$reply.id}" href="#" data-toggle="tooltip" data-original-title="Like">
+                                                    <i class="fa fa-thumbs-o-up"></i> <span>{$reply.like_count}</span>
+                                                    </span>
+                                                                <span class="text-danger cursor-pointer commentreplyDel m-l-10" data-id="{$reply.id}" href="#" data-toggle="tooltip" data-original-title="Del">
+                                                                <i class="fa fa-trash"></i> <span>删除</span>
+                                                            </span>
+
+
+                                                            </div>
+                                                        </div>
+                                                        {/if}
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        {/volist}
+
+
+                                        <!--end:评论回复-->
+                                    </div>
+                                </div>
+                                {if condition="$i eq count($commentlist)-1"}
+
+                                {else/}
+                                <hr>
+                                {/if}
+                               {/volist}
+
+
+                            </div>
+                            <div class="m-t-30"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{if condition="session('uid') neq ''"}
+<!--begin:打赏-->
+
+<div class="modal fade" id="PlayTourl" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="top:20%" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" data-user-id="" id="exampleModalLabel">打赏作者</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form>
+            <div class="modal-body">
+                    <div class="form-group">
+                        <label for="score" class="col-form-label">打赏积分:</label>
+                        <input required="" type="number" min="1" max="{$myscore['score']}" class="form-control" id="score" name="score">
+                        <input id="tk" type="hidden" value="{:token()}" name="__token__">
+                    </div>
+
+                <span class="text-muted">注:打赏积分将从账户扣除</span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="postscore" class="btn btn-primary">立即打赏</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!---->
+{/if}
+
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/jquery.isotope.min.js"}
+{JS href="__JS__/wangEditor.min.js"}
+{JS href="__JS__/highlight.min.js"}
+
+<script>
+
+    hljs.initHighlightingOnLoad();
+    let comment_url="/article/addComment/id/{$article.id}";
+    $('#PlayTourl').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var recipient = button.data('whatever') // Extract info from data-* attributes
+        var user_id = button.data('user-id')
+        var modal = $(this);
+        modal.find('.modal-title').attr('data-user-id',user_id)
+
+    })
+
+    $('.modal-content').on('click',"#postscore", function (event) {
+        let form=$(this).parents("form");
+        let uid = $('.modal-title').attr("data-user-id")
+        console.log(form[0][0].checkValidity())
+        if(form[0][0].checkValidity()==false){
+            form.addClass("was-validated");
+        }else {
+
+            let data=form.serialize()+'&uid='+uid;
+            $.ajax({
+                url: '/article/PlayTour',
+                method:'post',
+                data:data,
+                success (res) {
+                    if (res.code === 1) {
+                        swal(res.msg, '', "success").then(function () {
+                            location.reload()
+                        });
+                    }else if (res.code === 0)
+                    {
+                        swal(res.msg, '', "error").then(function () {
+                            location.reload()
+                        });
+                    }
+                }
+            });
+        }
+        return false;
+    })
+
+    function share()
+    {
+
+        var url = document.location.href;
+        console.log(url);
+
+
+        //toastr.success('复制文章链接成功！')
+    }
+
+</script>
+
+
+{/block}

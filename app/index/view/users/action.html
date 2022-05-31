@@ -1,0 +1,85 @@
+{extend name="public/base"}
+
+{block name="title"}公告{/block}
+  {block name="css"}  {css href="__CSS__/bootstrap-icons.css"}{/block}
+
+
+{block name="main"}
+    <div class="content-wrapper">
+        <div class="aman-warp">
+
+            <div class="content">
+                <div class="row">
+                    <div class="col-md-9 m-auto">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="timeline">
+                                    {volist id="vo" name='list'}
+                                    {if condition="$vo.action_type eq 1"}
+                                    <div class="timeline-item">
+                                        <div>
+                                            <figure class="avatar avatar-sm mr-3 bring-forward">
+                                    <span class="avatar-title bg-success-bright text-success rounded-circle">
+                                        <i class="bi bi-pin-angle"></i>
+                                                </span>
+                                            </figure>
+                                        </div>
+                                        <div>
+                                            <h6 class="d-flex justify-content-between mb-4">
+                                    <span>
+                                        上线了
+                                        <span target="_blank" class="link-1 text-primary">{$vo.action_title}</span>
+                                        题目
+                                    </span>
+                                                <span class="text-muted font-weight-normal">{$vo.action_time}</span></h6>
+
+                                        </div>
+                                    </div>
+                                    {else/}
+                                    <div class="timeline-item">
+                                        <div>
+                                            <a href="#">
+                                                <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                    <span class="avatar-title bg-youtube  rounded-circle"><i class="bi bi-bell"></i></span>
+                                                </figure>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <h6 class="d-flex justify-content-between mb-4">
+                                                <span>最新公告通知</span>
+                                                <span class="text-muted font-weight-normal">{$vo.action_time}</span>
+                                            </h6>
+                                            <div class="mb-3 border border-radius-1 p-3">
+                                                <div class="row no-gutters">
+                                                    <div>
+                                                        <h6 class="text-primary">{$vo.action_title}</h6>
+                                                        <p class="font-size-13 text-muted">{$vo.action_text}</p>
+                                                    </div>
+                                                </div>
+                                                <!--<a href="/notice/detail/id/39.html" target="_blank" class="link-1"><u>查看详情</u></a>-->
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {/if}
+
+                                  {/volist}
+                                    {$list | raw}
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{/block}
+
+    {block name="footer"}{/block}
+

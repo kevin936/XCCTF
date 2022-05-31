@@ -1,0 +1,172 @@
+{extend name="public/base"}
+
+{block name="title"}BASE64编码解码{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/index.html">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/tools">工具箱</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">栅栏加密/解密</li>
+                            </ol>
+                        </nav>
+                        <a href="/tools" class="btn btn-outline-primary btn-rounded">
+                            <i class="ti-angle-left mr-2"></i> 返回
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="">
+                                <div class="form-group">
+                                    <textarea name="code" placeholder="请输入需要加密/解密的内容" id="code" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+                                <div class="form-row form-group">
+                                    <label class="col-form-label"></label>
+                                    <div class="col-md-4">
+                                        <input type="number" id="key" placeholder="Key" value="2" class="form-control">
+                                    </div>
+                                    <button id="encode" type="button" class="btn btn-primary m-l-r-15">加密</button>
+                                    <button id="decode" type="button" class="btn btn-outline-primary">解密</button>
+
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="加密/解密的结果" id="res" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/tools/yufo.js"}
+<script>
+
+    $("#encode").click(function () {
+        let content = $('#code').val();
+        let num = $('#num').val();
+        num=clamp(num,2,100)
+        if (content == "") {
+            toastr.warning("请输入要加密的内容");
+            return "";
+        }
+        $("#res").val(enRailFence(content,num));
+    });
+    $("#decode").click(function () {
+        let content = $('#code').val();
+        let num = $('#num').val();
+        num=clamp(num,2,100)
+        if (content == "") {
+            toastr.warning("请输入要解密的内容");
+            return "";
+        }
+        $("#res").val(deRailFence(content,num));
+    });
+    $("#decodeAll").click(function () {
+        let content = $('#code').val();
+        if (content == "") {
+            toastr.warning("请输入要加密的内容");
+            return "";
+        }
+        let ret="";
+        for(let i=2;i<content.length;i++){
+            ret+=deRailFence(content,i)+"\r\n";
+            console.log(i)
+        }
+        $("#res").val(ret);
+    });
+    $("#encodeAll").click(function () {
+        let content = $('#code').val();
+        if (content == "") {
+            toastr.warning("请输入要加密的内容");
+            return "";
+        }
+        let ret="";
+        for(let i=2;i<content.length;i++){
+            ret+=enRailFence(content,i)+"\r\n";
+            console.log(i)
+        }
+        $("#res").val(ret);
+    });
+
+    function enRailFence(data,width)
+    {
+        data = data.replace(/\s/g, "");
+        let strOut = "";
+        let dummy = (width - data.length % width) % width;
+        data += numChar(dummy, "@");
+        let height = data.length / width;
+        for (let i = 0; i < width; i++)
+        {
+            for (let j = 0; j < height; j++)
+            {
+                strOut += data.charAt(j*width+i);
+            }
+        }
+        return strOut;
+    }
+
+    function deRailFence(data,height)
+    {
+        data = data.replace(/\s/g, "");
+        let strOut = "";
+        let dummy = (height - data.length % height) % height;
+        data  += numChar(dummy, "@");
+        let width = data .length / height;
+
+        for (let i = 0; i < width; i++)
+        {
+            for (let j = 0; j < height; j++)
+            {
+                strOut += data .charAt(j*width+i);
+            }
+        }
+        return strOut
+    }
+    function numChar(n, c)
+    {
+        let s = "";
+        for (let i = 0; i < n; i++)
+        {
+            s += c;
+        }
+        return s;
+    }
+
+
+    function clamp(n, min, max)
+    {
+        n = parseInt(n);
+        min = parseInt(min);
+        max = parseInt(max);
+        if (n < min) return min;
+        if (n > max) return max;
+        return n;
+    }
+
+</script>
+
+{/block}

@@ -1,0 +1,100 @@
+{extend name="public/base"}
+
+{block name="title"}BASE64编码解码{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/index.html">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/tools">工具箱</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">核心价值观编码</li>
+                            </ol>
+                        </nav>
+                        <a href="/tools" class="btn btn-outline-primary btn-rounded">
+                            <i class="ti-angle-left mr-2"></i> 返回
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="">
+                                <div class="form-group">
+                                    <textarea name="code" placeholder="请输入需要加密/解密的内容" id="code" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+                                <div class="form-row form-group">
+                                    <button id="encode" type="button" class="btn btn-primary m-l-r-15">加密</button>
+                                    <button id="decode" type="button" class="btn btn-outline-primary">解密</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="加密/解密的结果" id="res" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+
+                            </form>
+                            <p>作者: <a href="https://github.com/sym233" target="_blank" class="link-1">Github</a></p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/cvecode.js"}
+<script>
+
+    $("#encode").click(function () {
+        let keysquare=$("#keysquare").val(),
+            keyword=$("#keyword").val(),
+            code=$("#code").val();
+        if(code==""){
+            toastr.warning("请输入要加密的内容");
+        }else{
+            try {
+                let result = valuesEncode(code);
+                $("#res").val(result);
+            }catch (e) {
+                toastr.warning(e);
+            }
+        }
+    });
+
+    $("#decode").click(function () {
+        let keysquare=$("#keysquare").val(),
+            keyword=$("#keyword").val(),
+            code=$("#code").val();
+        if(code==""){
+            toastr.warning("请输入要解密的内容");
+        }else{
+            try {
+                let result = valuesDecode(code);
+                $("#res").val(result);
+            }catch (e) {
+                toastr.warning(e);
+            }
+        }
+    });
+
+
+
+</script>
+{/block}

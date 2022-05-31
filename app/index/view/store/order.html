@@ -1,0 +1,265 @@
+{extend name="public/base"}
+
+{block name="title"}订单详情{/block}
+{block name="css"}
+<style>
+    .wizard >.steps >ul >li, .wizard >.actions >ul >li {
+        float: left;
+    }
+    .wizard >.steps >ul >li {
+         width: 25%;
+     }
+    .wizard >.steps a, .wizard >.steps a:hover, .wizard >.steps a:active {
+        display: block;
+        width: auto;
+        margin: 0 0.5em 0.5em;
+        padding: 1em 1em;
+        text-decoration: none;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+</style>
+{/block}
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <button onclick="javascript:history.go(-1);" type="button" class="btn btn-outline-primary btn-rounded">
+                            <i class="fa fa-angle-left fa-lg mr-1"></i> 返回
+                        </button>
+
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <h6 class="card-title">创建订单</h6>
+                            <div id="wizard1" role="application" class="wizard clearfix">
+                                <div class="steps clearfix">
+                                    <ul role="tablist">
+                                        {if condition="$info.status eq 1"}
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index ">1</span>兑换商品</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-secondary"><span class="wizard-index">2</span>平台确认</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-secondary"><span class="wizard-index">3</span>平台发货</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-secondary"><span class="wizard-index">4</span>交易完成</a>
+                                        </li>
+                                        {elseif condition="$info.status eq 2"}
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">1</span>兑换商品</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">2</span>平台确认</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-secondary"><span class="wizard-index">3</span>平台发货</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-secondary"><span class="wizard-index">4</span>交易完成</a>
+                                        </li>
+
+                                        {elseif condition="$info.status eq 3"}
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">1</span>兑换商品</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">2</span>平台确认</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">3</span>平台发货</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-secondary"><span class="wizard-index">4</span>交易完成</a>
+                                        </li>
+                                        {elseif condition="$info.status eq 4"}
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">1</span>兑换商品</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">2</span>平台确认</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">3</span>平台发货</a>
+                                        </li>
+                                        <li role="tab" class="done">
+                                            <a class="bg-success"><span class="wizard-index">4</span>交易完成</a>
+                                        </li>
+                                        {/if}
+
+                                    </ul>
+                                </div>
+                                <div class="aman-goods-info">
+                                    <dl>
+                                        <dt>订单编号：</dt>
+                                        <dd id="shpid">{$info.shp_id}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>快递信息：</dt>
+                                        {if condition="$info.ding eq ''"}
+                                        <dd>
+                                            暂无
+                                        </dd>
+                                        {else}
+                                        <dd>
+                                            {$info.ding}
+                                        </dd>
+                                        {/if}
+                                    </dl>
+                                    <dl>
+                                        <dt>收货地址：</dt>
+                                        <dd>{$info.address}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>　联系人：</dt>
+                                        <dd>{$info.username}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>联系电话：</dt>
+                                        <dd>{$info.phone}</dd>
+                                    </dl>
+                                    <dl>
+                                        <dt>备　　注：</dt>
+                                        {if condition="$info.comment eq ''"}
+                                        <dd>无</dd>
+                                        {else/}
+                                        <dd>{$info.comment}</dd>
+                                        {/if}
+                                    </dl>
+                                    <dl>
+                                        <dt>消耗积分：</dt>
+                                        <dd>
+                                            <span class="text-danger">{$info.shp_num}</span>
+                                        </dd>
+                                    </dl>
+                                    {if condition="$info.status neq 4"}
+                                    <dl class="text-center">
+                                        <button type="button" class="btn btn-outline-primary" id="okay">确认收货</button>
+                                    </dl>
+                                    {/if}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+
+{block name="js"}
+{js href="__JS__/address.js"}
+<script>
+    var num = getUrlParam('num');
+    var unit = $("#unit").text();
+    var price = unit * num;
+    $("#num").text(num);
+    $("#price").text(price);
+
+
+
+    $("#submitForm").submit(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        let form=$(this)[0];
+        if(form.checkValidity()){
+            let data=$(this).serialize();
+            $.ajax({
+                url: "/store/creorder",
+                method: "post",
+                data: data,
+                success(res) {
+                    swal(res.msg, '', "success").then(function () {
+                        location.href=res.url
+                    });
+                }
+            })
+        }
+    });
+    $(function () {
+        var html = "";
+        $("#input_city").append(html);
+        $("#input_area").append(html);
+        $.each(pdata,function(idx,item){
+            if (parseInt(item.level) == 0) {
+                html += "<option value="+item.names+" data-code="+item.code+" >"+ item.names +"</option> ";
+            }
+        });
+        $("#input_province").append(html);
+
+        $("#input_province").change(function(){
+            if ($(this).val() == "") return;
+            $("#input_city option").remove();
+            $("#input_area option").remove();
+            var code = $(this).find("option:selected").data('code').toString();
+            code = code.substring(0,2);
+            var html = "<option value=''>请选择</option>";
+            $("#input_area option").append(html);
+            $.each(pdata,function(idx,item){
+                if (parseInt(item.level) == 1 && code == item.code.substring(0,2)) {
+                    html +="<option value="+item.names+" data-code="+item.code+" >"+ item.names +"</option> ";
+                }
+            });
+            $("#input_city ").append(html);
+        });
+
+        $("#input_city").change(function(){
+            if ($(this).val() == "") return;
+            $("#input_area option").remove();
+            var code = $(this).find("option:selected").data('code').toString();
+            code = code.substring(0,4);
+            var html = "<option value=''>请选择</option>";
+            $.each(pdata,function(idx,item){
+                if (parseInt(item.level) == 2 && code == item.code.substring(0,4)) {
+                    html +="<option value="+item.names+" data-code="+item.code+" >"+ item.names +"</option> ";
+                }
+            });
+            $("#input_area ").append(html);
+        });
+    });
+
+    $('#okay').click(function () {
+        var shpid = $('#shpid').text();
+        $.ajax({
+            url: "/store/shouhuo/id/"+shpid,
+            method: "get",
+            success(res) {
+                swal(res.msg, '', "success").then(function () {
+                    location.reload()
+                });
+            }
+        })
+
+    })
+
+    function getUrlParam(variable)
+    {
+        var query = window.location.search.substring(1);
+        var vars = query.split("&");
+        for (var i=0;i<vars.length;i++) {
+            var pair = vars[i].split("=");
+            if(pair[0] == variable){return pair[1];}
+        }
+        return(false);
+    }
+
+
+</script>
+
+
+{/block}

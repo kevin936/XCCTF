@@ -1,0 +1,100 @@
+{extend name="public/base"}
+
+{block name="title"}BASE64编码解码{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/index.html">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/tools">工具箱</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">希尔(Hill Cipher)加密/解密</li>
+                            </ol>
+                        </nav>
+                        <a href="/tools" class="btn btn-outline-primary btn-rounded">
+                            <i class="ti-angle-left mr-2"></i> 返回
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="">
+
+                                <div class="form-group">
+                                    <textarea name="code" placeholder="请输入需要加密/解密的内容" id="code" style="height: 200px;" class="form-control">ecnu</textarea>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col-md-2">
+                                        <select id="mode" name="mode" class="form-control">
+                                            <option value="1">模式1（A=0）</option>
+                                            <option value="2">模式2（A=1）</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input readonly="" type="text" value="2 5 9 5" id="key" name="keysquare" placeholder="KEY" class="form-control">
+                                    </div>
+                                    <button id="encode" type="button" class="btn btn-primary m-l-r-15">加密</button>
+                                    <button id="decode" type="button" class="btn btn-outline-primary">解密</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="加密/解密的结果" id="res" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="keyModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">秘钥矩阵</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <div class="form-group">
+                                <select id="keyMode" name="keys" class="form-control">
+                                    <option value="2">2*2</option>
+                                    <option value="3">3*3</option>
+                                </select>
+                            </div>
+                            <div id="keyBox"><div class="form-group form-row"><div class="col-md-6"><input type="text" autocomplete="off" class="form-control" name="key"></div><div class="col-md-6"><input type="text" autocomplete="off" class="form-control" name="key"></div></div><div class="form-group form-row"><div class="col-md-6"><input type="text" autocomplete="off" class="form-control" name="key"></div><div class="col-md-6"><input type="text" autocomplete="off" class="form-control" name="key"></div></div></div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="setKey" class="btn btn-primary">Set</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+
+<script>
+    var encode_version = 'jsjiami.com.v5', fizsy = '__0xb2127',  __0xb2127=['wpMvKGHDqMONZsKkwrTCpcKVX2vDtRXCrMOpw5vCi0zCiMKSwqvCjsOqdD3CigtKYhpCVsK2w4jDmMONw7bDsDdmbx8Sw6Vqw6gbWlZWGCXDtzjDnAEow6sCJALCpcOcw6hdw4fDvnw=','L11iwpzDhB4=','TMO1w61edCfCvQ==','WcKSw6ACw5c=','S8KowqLCqDc=','LMKvw7fDuMKI','wrElXcK6w404wpvDm8KXwrTCtGVhJ8OSw6Q/SMKYfMOPRMObJFjDtMKPwrhqw5MQDsKt','w4vCpQNXwrA=','fjnCgV3DkA==','w6zDnjVSwqU=','wp1rw7PDtcOJ','wpYQARxW','w752wrpdwqs=','w7wywrk1wrE=','aMOPESrCtMKg','w5DCpjfDhsKo','w7NXL1ls','w7jDhBnDrg==','bW0Fw4piaTQ=','M8KtGz5bwqrCt8KEw6xQw7TDqBc=','IxfDnVo=','fsK3w6YR','FsO4McO6AA==','wo4XGApK','w5JcHkZU','w4TDqHQ=','DsK5LyfClw==','DcK6EQfClA==','w5cYbsKowrg=','NcKtQMKDQw==','QX8KwqdlwrZzB1PCsjp8RA==','agJf','wonCrMOfwqE=','w4ELU8KCwqE=','w4ZUwoRawrQ=','w4bDpk3DicKOw5fDmzLCqcOYcQ==','OH8M','w7PDmBXDsETCmsKxFF4G','dMKCwq3CjA==','w4bCvRnDqsKr','wozDhsOjwpN0wqXCiCJW','w6PDmBvDtQ==','esO5XMKfXw==','w7zClcONwoY5','H8OMw4tiQg==','wobCtB7DqsKvwqRa','d8KDGifCpw==','MBljwow=','w65Cw48=','LgLCqyrChg==','w6t7FA==','wovCqMOA','w6lTw6VjFw==','IcK8eMKfaw==','bcOIRMKKcQ==','wpdvwr0Waw==','wq/Cn1Q=','w4M4d8Kiwrw=','w6liw5J7FWtv','MMKtwpDCrjnCqMOk','cMKlwpzCrj0=','ccKLY8K0Yg==','wrHCt2LDsA==','NcKpaA==','wrLCl8OGwoMw','K8O+w57DgTc=','wrkJDDNn','ESPCrC3CgA==','dMKawrnCuSY=','wr7Cv1w=','IMKgOsO7Rg==','w73Cn8OHwoAhwoc=','O8KMwqbCknPDgg==','dcOXYcK3TU8=','w7toFwLDhTLDgSzDk2grcw==','A8O8w5jDkxk=','wopCbsKgw5c=','XMKtw7Q=','LngHwrtz','U8KBw6U=','w6IDc8Kuwog=','MTbCvQ==','TsKkw53DhsKr','bxbDgHsh','w6vDvFXDicKd','IcKIwqQ=','YMK7w4A=','PW8Sw4o=','w7XCksO9CV0=','IsOZw54MAw==','NUEbwpdp','w5XChmDDocKZ','b8Kqw6TDpsKx','H8KsC8OeWQ==','54iH5p+F5Y6E776RS8KE5L+A5a6J5p2j5b2556m7772c6L6e6K6o5peF5o+y5oi15LuV55i55ba/5Lyl','w7NPCw==','wrJ2WMK2w7g=','cMKGw7DDlsKt','woV/w4rDpcOcDg==','w5fCnTbDncKy','dQBpwpjDsUh0Y8KQw7wJLQ==','ehRWwoXDmA==','C04Gw5hg','OcKKwqfCn34=','w5PCjcOMCko=','DnEBwrlTwrE=','WBrDikYk','w7nDqiNbwp8=','w43DqT9Zwr41','FXLCqHoLbg9jwrHDryxa','w4tCN1RY','bMKTwpwww50=','YcKewqI=','w6EkWsKrwpkz','cMKNwpzCphI=','a8OlWA==','PsKNwovCnmQ=','wq3CkW0Lw4B5GcKXaVDCgQ==','YcKbwrbCnDA=','BWHCqw==','HcKjW8K2ag==','w64pVcK+wq40wpPDn8KlwrM=','OlMpNSQ=','NcKIw5HDrsKA','w4LCm8OZGVE=','w4bCgcONOXA=','w53DqjnDgFM=','GmoRw4ZC','wrk3Li9B','J8KiOsOOUQ==','w4DDr20=','6Z6h6KSN55645b2c56SS6ZO4','SXxpwotu','w5R7w4hMGQ==','FWzCtlID','w4kqN1TDlg==','I8KMHcO6VcKf','OMKFGyTCtsO2','woPChG4Kw4Y=','wrlIw5TDs8Oe','w4bCgRh8wrA=','EMKQwoLCoHA=','w4YtFFLDig==','UyzCoSA0','L8OZw6zDjwk=','ajnCtSA0HA==','CT7CgybCkw==','w7hBw5d6EA==','w4cqwpcpwrM=','OMKnPCfCpg==','CcOcw79IWg==','fsK0woYzw6g=','w5nDuErDoMK6','w7fCqcOoIkQ=','FEY4','RVZu','AsKxwrs=','T8KGw64jw6s=','KsOIw5LDgTQa','w7tSwqBLwq/Clg==','6Z+96KWI552F5b6356S56ZOY','w7fCl0nDhMKF','w6I2wo0bwrLDoA==','dcK5woLCuxo=','w4wBwqAewpA=','WhHCnVTDhQ==','d8Krwqwsw6E=','UQXCnXfDsg==','QinCjFTDrA==','wqZJw4LDmsOp','CsOVw4ZqcA==','PiDCgQfCqg==','fg1LCcKr','BFMKwrB2','WiReKcKD','wpzDg8O7w4Iq','woxPw5LDusOQ','w6oPCETDtQ==','w7F/FgjDsjI=','JsKTC8O4Ww==','6LyO5YW/55u856a36ZCj5b6f6aOb6IKj5aaP57uD5omf55+/6ZqE','wphbw7bDisO8','F8KmJxDCuA==','w57DrHbDnsKKw5o=','w69xw6NjGQ==','KUU9w5h0','w73CuSLDo8Ky','K2jClX06','FQDCmCLCqg==','wo9tw7XDisO5','SVddwpRX','KcOWw4UMOA==','wrtQw6HDtcOE','XsOWTMKSUQ==','QUx6wo10','w6bDqBJ8wqI=','aMK8BiJ4','UMKPwqfCniw=','w6zDq8OUwrlD','ecKgwroNw5jCuQ==','wrDDt8O8w40uw59Cw6PCv8KYwpdIdEE=','XxdV','54uZ5p+W5Y2e77+rP8Kc5L6w5a+Q5pyu5byS56qH776K6L6s6K+h5pSL5o+M5oqi5LiZ55uT5be+5Lyh','wpvCk1c=','w6sQfsKawpk=','YcK+Lg==','wrHDnMOdw5Up','OcK8H8OKeQ==','GcKsJgHCqA==','VsKrw7rDnsKk','PVbCi2UN','w4HClmLDmMKH','WB1NwqHDpw==','QBvCiVjDiw==','w77CuWnDrsK3UA==','w711w5pMDw==','McORNcOVDQ==','w6o2PkLDsw==','woRQVsKDw5k=','Cm0Jwrlh','IErCokYM','UA7CmCUu','AcKiacKBQw==','Tg5FHcKn','w5fDh1vDs8KW','EMO3MMOFDg==','w4jCjA94wp0=','QcKkwoPCnxc=','w4xuw5ZHPQ==','w7fCkkTDg8Kr','YkIhw71E','IcOyJ8O5KD8=','MB9pwpHDlw==','wqFafMKlw6M=','OmI5HwU=','U8O6w6FRFivCqcOmcmPDl8O7w7ABRMKracKHw78='];(function(_0x75e2e,_0x2de5ad){var _0x18cec1=function(_0x29c92a){while(--_0x29c92a){_0x75e2e['push'](_0x75e2e['shift']());}};_0x18cec1(++_0x2de5ad);}(__0xb2127,0xe6));var _0xa6ab=function(_0x171351,_0x2f17df){_0x171351=_0x171351-0x0;var _0x456130=__0xb2127[_0x171351];if(_0xa6ab['initialized']===undefined){(function(){var _0x3a66b8=typeof window!=='undefined'?window:typeof process==='object'&&typeof require==='function'&&typeof global==='object'?global:this;var _0x18da2c='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';_0x3a66b8['atob']||(_0x3a66b8['atob']=function(_0x57639d){var _0x5ec7d3=String(_0x57639d)['replace'](/=+$/,'');for(var _0x5a53d2=0x0,_0x3c914d,_0x111229,_0x280851=0x0,_0x414fae='';_0x111229=_0x5ec7d3['charAt'](_0x280851++);~_0x111229&&(_0x3c914d=_0x5a53d2%0x4?_0x3c914d*0x40+_0x111229:_0x111229,_0x5a53d2++%0x4)?_0x414fae+=String['fromCharCode'](0xff&_0x3c914d>>(-0x2*_0x5a53d2&0x6)):0x0){_0x111229=_0x18da2c['indexOf'](_0x111229);}return _0x414fae;});}());var _0x21cf19=function(_0x52c8ce,_0x211d66){var _0x3e0cdf=[],_0x16e0b9=0x0,_0x34bf8e,_0x3d5501='',_0xf169e4='';_0x52c8ce=atob(_0x52c8ce);for(var _0x1abf13=0x0,_0x515b7c=_0x52c8ce['length'];_0x1abf13<_0x515b7c;_0x1abf13++){_0xf169e4+='%'+('00'+_0x52c8ce['charCodeAt'](_0x1abf13)['toString'](0x10))['slice'](-0x2);}_0x52c8ce=decodeURIComponent(_0xf169e4);for(var _0x40841c=0x0;_0x40841c<0x100;_0x40841c++){_0x3e0cdf[_0x40841c]=_0x40841c;}for(_0x40841c=0x0;_0x40841c<0x100;_0x40841c++){_0x16e0b9=(_0x16e0b9+_0x3e0cdf[_0x40841c]+_0x211d66['charCodeAt'](_0x40841c%_0x211d66['length']))%0x100;_0x34bf8e=_0x3e0cdf[_0x40841c];_0x3e0cdf[_0x40841c]=_0x3e0cdf[_0x16e0b9];_0x3e0cdf[_0x16e0b9]=_0x34bf8e;}_0x40841c=0x0;_0x16e0b9=0x0;for(var _0x211cd7=0x0;_0x211cd7<_0x52c8ce['length'];_0x211cd7++){_0x40841c=(_0x40841c+0x1)%0x100;_0x16e0b9=(_0x16e0b9+_0x3e0cdf[_0x40841c])%0x100;_0x34bf8e=_0x3e0cdf[_0x40841c];_0x3e0cdf[_0x40841c]=_0x3e0cdf[_0x16e0b9];_0x3e0cdf[_0x16e0b9]=_0x34bf8e;_0x3d5501+=String['fromCharCode'](_0x52c8ce['charCodeAt'](_0x211cd7)^_0x3e0cdf[(_0x3e0cdf[_0x40841c]+_0x3e0cdf[_0x16e0b9])%0x100]);}return _0x3d5501;};_0xa6ab['rc4']=_0x21cf19;_0xa6ab['data']={};_0xa6ab['initialized']=!![];}var _0x383bee=_0xa6ab['data'][_0x171351];if(_0x383bee===undefined){if(_0xa6ab['once']===undefined){_0xa6ab['once']=!![];}_0x456130=_0xa6ab['rc4'](_0x456130,_0x2f17df);_0xa6ab['data'][_0x171351]=_0x456130;}else{_0x456130=_0x383bee;}return _0x456130;};let MODE=0x0;$(_0xa6ab('0x0','1edO'))[_0xa6ab('0x1','j6!h')](function(){var _0x593da1={'Rastb':function _0x4beb43(_0x16f217,_0x2846bb){return _0x16f217==_0x2846bb;},'TEaRJ':_0xa6ab('0x2','XZPC')};MODE=_0x593da1[_0xa6ab('0x3','Cgt1')]($(_0x593da1[_0xa6ab('0x4','E@wQ')])['val'](),'1')?0x0:0x1;});$('#keyMode')['change'](function(){var _0x45961c={'OLbvr':function _0x8df79a(_0x45e537,_0x53a876){return _0x45e537==_0x53a876;},'uwGOh':function _0x97d054(_0x2012df,_0x137178){return _0x2012df(_0x137178);},'XaWea':'#keyMode','laoro':function _0xf59e92(_0x163e8e,_0x444e39){return _0x163e8e<_0x444e39;},'fgOeE':function _0x232065(_0x5d05f0,_0x97a93e){return _0x5d05f0<_0x97a93e;},'MRdlo':function _0x543556(_0x35c521,_0x2f0c2d){return _0x35c521+_0x2f0c2d;},'tqWwa':function _0x4c674c(_0x2b50de,_0x10ceef){return _0x2b50de+_0x10ceef;},'vrAeZ':_0xa6ab('0x5','2eZ*'),'iAtqp':_0xa6ab('0x6','8nf#'),'raZIw':_0xa6ab('0x7','XZPC'),'rORtW':_0xa6ab('0x8','2eZ*')};let _0x2013a2='';let _0x11e990=_0x45961c[_0xa6ab('0x9','@lnJ')](_0x45961c['uwGOh']($,_0x45961c[_0xa6ab('0xa','5[S9')])['val'](),'2')?0x2:0x3;for(let _0x351092=0x0;_0x45961c[_0xa6ab('0xb',']n&$')](_0x351092,_0x11e990);_0x351092++){let _0x443937=_0xa6ab('0xc','Q#hM');for(let _0x46fe52=0x0;_0x45961c[_0xa6ab('0xd','Fnx%')](_0x46fe52,_0x11e990);_0x46fe52++){_0x443937+=_0x45961c['MRdlo'](_0x45961c[_0xa6ab('0xe','tD$t')](_0x45961c[_0xa6ab('0xf','J8d8')](_0x45961c[_0xa6ab('0x10','24WV')](_0x45961c[_0xa6ab('0x11','C9YJ')],0xc/_0x11e990),'\x22>'),_0x45961c[_0xa6ab('0x12','glx!')]),_0x45961c[_0xa6ab('0x13','0UbY')]);}_0x2013a2+=_0x45961c['tqWwa'](_0x443937,_0xa6ab('0x14','gR3e'));}_0x45961c[_0xa6ab('0x15','9u4W')]($,_0x45961c[_0xa6ab('0x16','7La^')])[_0xa6ab('0x17','as6w')](_0x2013a2);});$(_0xa6ab('0x18','Frl*'))['click'](function(){var _0x358697={'ZYZdU':function _0x422f1b(_0x59b9c2,_0x2fe33a){return _0x59b9c2(_0x2fe33a);},'TbwmO':_0xa6ab('0x19','yxkq'),'nuXsF':function _0x46894f(_0xdc16c6,_0x1a42a4){return _0xdc16c6<_0x1a42a4;},'SDcko':function _0x95971b(_0x48930a,_0x4d4eae){return _0x48930a+_0x4d4eae;},'RCdDn':function _0x26532f(_0x33ece4,_0x493067){return _0x33ece4==_0x493067;},'YZdDV':_0xa6ab('0x1a','fcrQ'),'TByRK':'#keyModal','gELSD':_0xa6ab('0x1b','@lnJ')};let _0x1811bd=_0x358697['ZYZdU']($,_0x358697[_0xa6ab('0x1c','j6!h')]);let _0x2a4f8b='';for(let _0x3d5f0f=0x0;_0x358697[_0xa6ab('0x1d','C9YJ')](_0x3d5f0f,_0x1811bd['length']);_0x3d5f0f++){_0x2a4f8b+=_0x358697[_0xa6ab('0x1e','7La^')](_0x358697['RCdDn'](_0x3d5f0f,0x0)?'':'\x20',_0x1811bd['eq'](_0x3d5f0f)[_0xa6ab('0x1f','67&U')]());}_0x358697[_0xa6ab('0x20','gR3e')]($,_0x358697[_0xa6ab('0x21','gR3e')])['val'](_0x2a4f8b);_0x358697[_0xa6ab('0x22','Q#hM')]($,_0x358697['TByRK'])['modal'](_0x358697[_0xa6ab('0x23','8bJt')]);});$(_0xa6ab('0x24','f#%b'))['on']('change',function(){var _0x174794={'LJgNL':function _0x491de3(_0x3e0853,_0x4a74ea){return _0x3e0853!==_0x4a74ea;},'QcJvo':'PFG','aMCSA':function _0x4b8bb1(_0x46bdfd,_0x34986c){return _0x46bdfd+_0x34986c;},'bEScM':function _0x8ea65f(_0x468125,_0x1ae3ac){return _0x468125-_0x1ae3ac;}};let _0x4bda3e=$(this)[_0xa6ab('0x25','KXuv')]();var _0xdff50=/^[A-Za-z]*$/;if(_0xdff50[_0xa6ab('0x26','uCPF')](_0x4bda3e)){if(_0x174794[_0xa6ab('0x27','Q#hM')]('PFG',_0x174794[_0xa6ab('0x28','glx!')])){list[n][i]='X';}else{_0x4bda3e=_0x4bda3e[_0xa6ab('0x29','67&U')]();$(this)[_0xa6ab('0x2a','Frl*')](_0x174794['aMCSA'](_0x174794['bEScM'](_0x4bda3e[0x0][_0xa6ab('0x2b','as6w')](),0x41),MODE));}}});$(_0xa6ab('0x2c','XHY['))[_0xa6ab('0x2d','9u4W')](function(){var _0x284362={'cKSOf':_0xa6ab('0x2e','@E#l'),'pRCEt':_0xa6ab('0x2f','as6w')};$(_0x284362[_…
+</script>
+
+{/block}

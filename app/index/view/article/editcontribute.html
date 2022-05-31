@@ -1,0 +1,136 @@
+{extend name="public/base"}
+
+{block name="title"}文章编辑{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="card col-9 m-auto">
+                <div class="card-body">
+                    <form id="post" class="needs-validation" novalidate="" data-id="{$detail.id}">
+                        <h3 class="m-b-20 text-center">文章编辑</h3>
+                        <div class="alert alert-warning alert-with-border" role="alert">请严格遵守社区发文规范协议，如转载请注明原著！</div>
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputState"><code>*</code>文章分类</label>
+                                <select id="inputState" class="form-control" name="type" required="">
+                                    {volist id="vo" name="typelist"}
+                                    {if condition="$vo.id eq $detail.type"}
+                                    <option value="{$vo.id}" selected="selected">{$vo.type_name}</option>
+                                    {else/}
+                                    <option value="{$vo.id}">{$vo.type_name}</option>
+                                    {/if}
+                                   {/volist}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="title"><code>*</code>标题</label>
+                            <input type="text" class="form-control" name="title" id="title" required="" value="{$detail.title}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="content"><code>*</code>内容</label>
+                            <div id="content">
+
+                            </div>
+                        </div>
+                        <p class="text-right"><a target="_blank" href="#" class="link-1">投稿规范</a></p>
+
+                        <button type="submit" class="btn btn-primary ">更新发布</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/jquery.isotope.min.js"}
+{JS href="__JS__/wangEditor.min.js"}
+{JS href="__JS__/highlight.min.js"}
+<script>
+    const E = window.wangEditor;
+    const editor = new E('#content');
+    editor.config.uploadImgMaxLength = 1;
+    editor.config.height = 500;
+
+    editor.config.styleWithCSS = "border-radius: 0.5rem;";
+    editor.config.colors = ['#007bff', '#6610f2', '#6f42c1', '#e83e8c', '#dc3545', '#fd7e14', '#ffc107', '#28a745', '#20c997', '#17a2b8', '#fff', '#6c757d', '#343a40', '#007bff', '#6c757d', '#28a745', '#17a2b8', '#ffc107', '#dc3545', '#f8f9fa', '#343a40',];
+    editor.config.uploadImgHooks = {
+        fail: function (xhr, editor, resData) {
+            toastr.warning(resData.msg);
+        }
+    };
+    editor.config.showLinkImg = false;
+    editor.highlight = hljs;
+    editor.config.uploadImgServer = '/users/uploadimg';
+    editor.config.uploadFileName = 'image';
+    editor.config.customAlert = function (s) {
+        toastr.warning(s);
+    };
+    editor.config.zIndex = 900;
+    editor.config.uploadImgMaxSize = 2 * 1024 * 1024;
+    $.getJSON("/static/home/data/icon.json", function (json) {
+        editor.config.emotions = [
+            {
+                title: "默认",
+                type: "image",
+                content: json
+            },
+            {
+                title: 'emoji',
+                type: 'emoji',
+                content: '😀 😁 😂 😃 😄 😅 😆 😉 😊 😋 😎 😍 😘 😗 😙 😚 😇 😐 😑 😶 😏 😣 😥 😮 😯 😪 😫 😴 😌 😛 😜 😝 😒 😓 😔 😕 😲 😷 😖 😞 😟 😤 😢 😭 😦 😧 😨 😬 😰 😱 😳 😵 😡 😠'.split(/\s/),
+            }
+        ];
+        editor.create();
+        editor.txt.html(`{$detail.content}`)
+    });
+
+
+
+    $("#post").submit(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        let id=$(this).data('id');
+        let form = $(this)[0];
+        if (form.checkValidity()) {
+            let data = $(this).serialize();
+            //console.log(data);
+            data="content="+encodeURIComponent(editor.txt.html())+"&id="+id+"&"+data;
+            //console.log(data);
+            $.ajax({
+                url: "/article/contributeedit",
+                method:'post',
+                data:data,
+                success(res) {
+                        if (res.code === 1) {
+                            swal(res.msg, '', "success").then(function () {
+                                location.href=res.url
+                            });
+                        }else if(res.code === 0)
+                        {
+                            swal(res.msg, '', "error").then(function () {
+                                location.href='/'
+                            });
+                        }
+                    }
+                });
+        }
+    });
+</script>
+
+{/block}

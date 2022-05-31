@@ -1,0 +1,198 @@
+{extend name="public/base"}
+
+    {block name="title"}挑战靶场{/block}
+
+{block name="header"}{/block}
+{block name="css"}{css href="__font__/css/font-awesome.min.css"}{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+
+    <div class="aman-warp">
+
+        <!--content top-->
+        <div class="content">
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class=" page-header justify-content-between">
+                        <div class="align-items-center" id="typelist">
+
+                            <ul class="nav nav-pills gallery-filter-type">
+                                <span class="nav-link" id="type">类型：</span>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{:url('/users/challenge')}" data-filter="*">ALL</a>
+                                </li>
+                                {volist id="type" name="typelist"}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{:url('/users/challenge/tid/')}{$type.id}">{$type.type}</a>
+                                </li>
+                                {/volist}
+                            </ul>
+                        </div>
+                        <div class="card m-b-15" style="overflow: hidden">
+                            <div class="card-body p-t-b-5 overflow-hidden" style="height: 50px;">
+                                <i class="fa fa-bullhorn text-warning" aria-hidden="true"></i>
+                                <ul class="notice-li" style="margin-top: 0px;">
+                                    {volist id="vo" name="answerlist"}
+                                    <li>
+                                        <a href="#" target="_blank">{if condition="$vo.team_id neq ''" } 来自 <a class="text-primary">{$vo.team_id}</a> 战队的
+                                            {/if}<a class="text-primary">{$vo.uid}</a> 解出了 <a class="text-primary">{$vo.tid}</a> <small class="text-muted pl-2">[{$vo.create_time}]</small>
+                                        </a>
+                                    </li>
+                                {/volist}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!--<a href="/challenges/contribute.html" target="_blank" class="btn btn-primary btn-rounded"><i class="ti-pencil mr-1"></i>投稿赚积分</a>-->
+                    </div>
+
+                    <div class="row challenge-hover gallery-container m-t-50">
+                        {volist id='list' name='tmlist'}
+                        <div class="col-sm-3">
+                            <a href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="{$list.topic_name}" data-cid="{$list.id}" id="modalBtn">
+                                <div class="card overflow-hidden">
+                                    {volist id="vo" name="answer"}
+                                    {if condition="$vo.tid eq $list.topic_name"}
+                                    <div class="aman-card-tag">
+                                        已完成
+                                    </div>
+                                    {/if}
+                                    {/volist}
+                                    <div class="card-body">
+                                        <h6 class="card-title text-center">{$list.topic_name}</h6>
+                                        <div class="row text-center">
+                                            <div class="col-4 text-info">
+                                                <h4 class="font-weight-bold">{$list.topic_difficulty}</h4>
+                                                <small>难度</small>
+                                            </div>
+                                            <div class="col-4 text-success">
+                                                <h4 class="font-weight-bold">{$list.topic_score}</h4>
+                                                <small>分数</small>
+                                            </div>
+                                            <div class="col-4 text-warning">
+                                                <h4 class="font-weight-bold">{$list.topic_succeed}</h4>
+                                                <small>解决</small>
+                                            </div>
+                                        </div>
+                                        <footer style="padding:0.5rem;padding-top:1.5rem;padding-bottom: 0">
+
+                                            <!--<small class="text-muted">-->
+                                                {if condition="$list.top_1 neq '' "}
+                                            <a href="#" title="" data-toggle="tooltip" data-original-title="{$list.top_1.username}">
+                                            <figure class="avatar ml-3 mr-4 position-relative" style="width:2.5rem;height:2.5rem">
+                                                <img src="__images__/p1.png" class="aman-avatar-border" style="left:-22%;top:-30%;width:3.7rem!important;height:3.7rem!important;position: absolute;">
+                                                <img src="{$list.top_1.img}" class="rounded-circle">
+                                            </figure>
+                                            </a>
+
+                                                {/if}
+                                                {if condition="$list.top_2 neq '' "}
+                                            <a href="#" title="" data-toggle="tooltip" data-original-title="{$list.top_2.username}">
+                                            <figure class="avatar mr-4 position-relative" style="width:2.5rem;height:2.5rem">
+                                                <img src="__images__/p2.png" class="aman-avatar-border" style="left:-22%;top:-30%;width:3.7rem!important;height:3.7rem!important;position: absolute;">
+                                                <img src="{$list.top_2.img}" class="rounded-circle">
+                                            </figure>
+                                            </a>
+
+                                                {/if}
+                                                {if condition="$list.top_3 neq '' "}
+                                            <a href="#" title="" data-toggle="tooltip" data-original-title="{$list.top_3.username}">
+                                            <figure class="avatar  position-relative" style="width:2.5rem;height:2.5rem">
+                                                <img src="__images__/p3.png" class="aman-avatar-border" style="left:-22%;top:-30%;width:3.7rem!important;height:3.7rem!important;position: absolute;">
+                                                <img src="{$list.top_3.img}" class="rounded-circle">
+                                            </figure>
+                                            </a>
+                                                {/if}
+                                            <!--</small>-->
+
+                                        </footer>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        {/volist}
+
+                        <div class="modal fade " id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" cid="" id="exampleModalLabel">New message</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <p class="account">题目描述</p>
+                                        </div>
+
+                                        <a class="btn btn-outline-primary" href="#" id="file" hidden><i class="fa fa-download mr-1"></i>下载附件</a>
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="flag" class="col-form-label">FLAG:</label>
+                                                <input type="text" class="form-control" id="flag" placeholder="格式：flag{xxxxxx}">
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                        <button type="button" class="btn btn-primary" id="getflag">提交</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <nav aria-label="...">
+
+                    </nav>
+                    {$tmlist | raw}
+                </div>
+            </div>
+        </div>
+        <!--content end-->
+
+
+
+    </div>
+
+</div>
+
+
+
+    <!--Misc题目结束-->
+{/block}
+    <!--底部引入-->
+{block name="footer"}{/block}
+
+
+
+<!--引入JS文件-->
+
+{block name="js"}
+{JS href="__JS__/msg.js"}
+{JS href="__JS__/challenge.js"}
+{JS href="__JS__/jquery.isotope.min.js"}
+
+<script type="text/javascript">
+    setTimeout(playNotice,5000);
+    function playNotice(){
+        var num = $(".notice-li").find("li").length;
+        if (num > 1) {
+            $('.notice-li').animate({marginTop: "-40px"}, 500, function () {
+                $(this).css({marginTop: "0"}).find("li:first").appendTo(this);
+            });
+            setTimeout(playNotice,5000);
+        }
+
+    }
+</script>
+{/block}
+
+
+
+

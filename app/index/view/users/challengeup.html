@@ -1,0 +1,109 @@
+{extend name="public/base"}
+
+{block name="title"}题目投稿{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="card col-9 m-auto">
+                <div class="card-body">
+                    <form id="post" class="needs-validation" novalidate="">
+                        <h3 class="m-b-20 text-center">题目投稿</h3>
+                        <a style="position: absolute;right:20px;top:10px" href="#" class="link-1 f-right">我的投稿</a>
+                        <div class="alert alert-warning alert-with-border" role="alert">PS：请把题目和writeup压缩在一起上传。</div>
+                        <div class="form-group">
+                            <label for="title"><code>*</code>标题</label>
+                            <input type="text" class="form-control" id="title" name="title" placeholder="请输入标题" required="">
+                        </div>
+                        <div class="form-group">
+                            <label><code>*</code>类型</label>
+                            <br>
+                            {volist id="vo" name="types"}
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" id="customRadio_{$vo.id}" name="type" value="{$vo.id}" class="custom-control-input" required="">
+                                <label class="custom-control-label" for="customRadio_{$vo.id}">{$vo.type}</label>
+                            </div>
+                            {/volist}
+
+                        </div>
+                        <div class="form-group">
+                            <label><code>*</code>作者</label>
+                            <input type="text" class="form-control" value="{$info.username}" placeholder="请输入作者名称（自己请填写“自己”）" readonly="">
+                            <input type="text" class="form-control" name="uid" value="{$info.id}" placeholder="此字段自动填写，无需修改" hidden>
+                        </div>
+                        <div class="form-group">
+                            <label for="customFile"><code>*</code>附件 <span class="text-muted" style="font-size: 12px">(大小限制<=30M，如附件太大，可自行上传云盘后将链接放在备注)</span> <i class="ti-help-alt" title="" data-toggle="tooltip" data-original-title="仅支持zip|rar|7z，最大30M"></i></label>
+                            <div class="custom-file">
+                                <input type="file" name="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" id="fileName" for="customFile">选择附件</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="remarks">备注</label>
+                            <textarea class="form-control" placeholder="请输入备注" id="remarks" rows="3" style="resize: unset" name="remarks"></textarea>
+                        </div>
+                        <p class="text-right"><a href="#" class="link-1">题目投稿规范</a></p>
+                        <button type="submit" class="btn btn-primary">立即投稿</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+
+<script>
+    $("#customFile").change(function () {
+        let file=$(this).val();
+        $("#fileName").html(file!=""?file:'选择附件');
+    });
+
+    $("#post").submit(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        let form = $(this)[0];
+
+        if(form.checkValidity()){
+            let data=new FormData(form);
+
+            $.ajax({
+                url: "/users/challengespost",
+                method: "post",
+                data:data,
+                //headers: {'X-CSRF-TOKEN': $.cookie('X-CSRF-TOKEN')},
+                cache:false,
+                processData:false,
+                contentType:false,
+                success (res) {
+                    if(res.code===1){
+                        swal(res.msg, '', "success").then(function () {
+                            location.reload()
+                        });
+                    }else{
+
+                        swal(res.msg||"未知错误", '', "error").then(function () {
+                            location.reload()
+                        });
+                    }
+                }
+            });
+        }else {
+            $("#post").addClass("was-validated");
+        }
+    });
+</script>
+{/block}

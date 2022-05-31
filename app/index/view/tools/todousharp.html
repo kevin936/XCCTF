@@ -1,0 +1,69 @@
+{extend name="public/base"}
+
+{block name="title"}与佛禅论加密解密{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="{:url('/')}">首页</a></li>
+                                <li class="breadcrumb-item"><a href="{:url('/tools')}">工具箱</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">与佛禅论加密解密</li>
+                            </ol>
+                        </nav>
+                        <a href="{:url('/tools')}" class="btn btn-outline-primary btn-rounded">
+                            <i class="ti-angle-left mr-2"></i> 返回
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="">
+                                <div class="form-group">
+                                    <textarea placeholder="请输入需要加密/解密的内容" id="code" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+                                <div class="form-row form-group">
+                                    <label class="col-form-label">箴言</label>
+                                    <div class="col-md-4">
+                                        <input type="number" id="key" placeholder="箴言（可选）" value="" class="form-control">
+                                    </div>
+                                    <button id="encode" onclick="encrypt()" type="button" class="btn btn-primary m-l-r-15">加密</button>
+                                    <button id="decode" onclick="decrypt()" type="button" class="btn btn-outline-primary">解密</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="加密/解密的结果" id="res" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/tools/crypto-js.min.js"}
+{JS href="__JS__/tools/yufo.js"}
+<script>
+
+
+</script>
+{/block}

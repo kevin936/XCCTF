@@ -1,0 +1,100 @@
+{extend name="public/base"}
+
+{block name="title"}战队列表{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="page-header justify-content-between">
+                <div>
+                    <a href="{:url('/teamgrid')}" class="btn btn-outline-primary" data-toggle="tooltip" data-original-title="Grid">
+                        <i class="fa fa-th-large"></i>
+                    </a>
+                    <a href="{:url('/teamlist')}" class="btn btn-outline-primary  active ml-2" data-toggle="tooltip" data-original-title="List">
+                        <i class="fa fa-th-list"></i>
+                    </a>
+                </div>
+                <form>
+                    <div class="input-group">
+                        <input type="text" name="teamname" value="" class="form-control" placeholder="请输入战队名称" required="">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" id="button-addon1">搜索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th width="200" scope="col">战队</th>
+                                        <th scope="col">宣言</th>
+                                        <th width="120" scope="col">队长</th>
+                                        <th width="150" scope="col">成员</th>
+                                        <th width="80" class="text-center">排名</th>
+                                        <th width="80">分数</th>
+                                        <th width="120">创建时间</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {volist id="vo" name="teamlist"}
+                                    <tr>
+                                        <td>
+                                            <a class="link-1" href="/teaminfo/id/{$vo.id}">
+                                                <figure class="avatar avatar-sm mr-2">
+                                                    <img src="{$vo.team_img}" onerror="this.src='/static/images/face.png'" class="rounded-circle">
+                                                </figure>
+                                                {$vo.team_name}                                  </a>
+                                        </td>
+                                        <td>
+                                            <span class="text-muted small mt-1 mb-3">{$vo.team_content}</span>
+                                        </td>
+
+                                        <td>
+                                            <a class="link-1" href="#">{$vo.team_leader}</a>
+                                        </td>
+                                        <td>
+                                            <div class="avatar-group">
+                                                {volist id="user" name="$vo.teamusers"}
+                                                <figure class="avatar avatar-sm">
+                                                    <a href="#" title="" data-toggle="tooltip" data-original-title="Paradiso">
+                                                        <img src="{$user.uid_img}" class="rounded-circle">
+                                                    </a>
+                                                </figure>
+                                                {/volist}
+
+                                            </div>
+                                        </td>
+                                        <td class="text-center" scope="row">{$i}</td>
+                                        <td>{$vo.team_score}</td>
+                                        <td>{$vo.create_time|date="Y-m-d"}</td>
+                                    </tr>
+                                    {/volist}
+
+
+
+
+
+
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {$teamlist | raw}
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}

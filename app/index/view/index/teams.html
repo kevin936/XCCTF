@@ -1,0 +1,54 @@
+{extend name="public/base"}
+
+{block name="title"}战队列表{/block}
+
+{block name="main"}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-3 mx-auto text-center">
+    <h3 class="display-5">战队列表</h3>
+</div>
+
+<div class="container">
+    <form action="{:url('/index/teams')}">
+    <div class="form-row col-md-12 pb-2 align-items-center center-block">
+        <div class="col-auto">
+            <input type="text" class="form-control" id="teamname" name="teamname" placeholder="请输入战队名称">
+        </div>
+        <button class="btn btn-primary col-auto"><i class="bi bi-search"></i> 搜索</button>
+
+    </div>
+    </form>
+    <table class="table table-striped text-center">
+        <thead>
+        <tr>
+            <th scope="col">id</th>
+            <th scope="col">战队名称</th>
+            <th scope="col">战队总分</th>
+            <th scope="col">战队队长</th>
+            <th scope="col">战队人数</th>
+            <th scope="col">战队状态</th>
+        </tr>
+        </thead>
+        <tbody>
+        {assign name="empty" value='<tr><td colspan="7" class="text-muted">msg：未查到相应数据</td></tr>'}
+        {volist id='info' name='list' empty="$empty"}
+        <tr>
+            <th scope="row">{$info.id}</th>
+            <td>{$info.team_name}</td>
+            <td>{$info.team_score}</td>
+            <td>{$info.team_leader}</td>
+            <td>{$info.team_number}/10</td>
+            <td><span class="badge badge-{$info.badge}">{$info.team_status}</span></td>
+        </tr>
+        {/volist}
+        </tbody>
+    </table>
+
+    <!--分页-->
+        {$list | raw}
+
+    <!--底部模块-->
+
+</div>
+{/block}
+
+{block name="footer"}{/block}

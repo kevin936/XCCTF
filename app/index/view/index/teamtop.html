@@ -1,0 +1,19 @@
+{extend name="public/base"}
+
+{block name="title"}战队排行榜{/block}
+
+{block name="main"}
+<div class="container pt-5">
+    <div id="container" style="height: 500px"></div>
+
+    <!--底部引入-->
+</div>
+{/block}
+{block name="footer"}{/block}
+
+<!--引入JS文件-->
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/teamtop.js"}
+{/block}

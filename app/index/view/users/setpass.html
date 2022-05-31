@@ -1,0 +1,76 @@
+{extend name="public/base"}
+
+{block name="title"}信息设置{/block}
+{block name="css"}
+{css href="__font__/css/font-awesome.min.css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="header"}{/block}
+
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row app-block">
+                        <div class="col-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="nav flex-lg-column flex-sm-row nav-pills" role="tablist" aria-orientation="vertical">
+                                        <a class="nav-link m-b-10" href="{:url('/users/info')}">
+                                            个人信息
+                                        </a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/message')}">消息中心</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/myteam')}">我的战队</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/order')}">我的订单</a>
+                                        <a class="nav-link m-b-10" href="{:url('users/setinfo')}">信息设置</a>
+                                        <a class="nav-link m-b-10 active" href="#">修改密码</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-9">
+                            <div class="card">
+
+                                <div class="card-body">
+                                    <h6 class="card-title">修改密码</h6>
+                                    <form id="passForm" class="needs-validation" novalidate="">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>原密码</label>
+                                                    <input type="password" required="" name="oldpass" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>新密码</label>
+                                                    <input type="password" required="" name="password" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>确认密码</label>
+                                                    <input type="password" required="" name="repassword" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary">确定</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}{js href="__JS__/setpass.js"}{/block}

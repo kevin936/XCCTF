@@ -1,0 +1,224 @@
+{extend name="public/base"}
+
+{block name="title"}战队信息{/block}
+{block name="css"}
+<style>
+    .aman-avatar-border {
+        position: absolute;
+    }
+</style>
+{/block}
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-4">
+                                        <div class="d-flex">
+                                            <div>
+                                                <figure class="avatar mr-3">
+                                                    <img src="{$teaminfo.team_img}" onerror="this.src='/static/images/unknown.png'" class="rounded">
+                                                </figure>
+                                            </div>
+                                            <div>
+                                                <h5 class="mt-0">战队：{$teaminfo.team_name}</h5>
+                                                <small class="text-muted">宣言：{$teaminfo.team_content}</small>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            {if condition="$teamcheck.team_id neq $teaminfo.id && $teamcheck.team_id eq ''" }
+                                            <button data-toggle="modal" data-target="#applyModal" class="btn btn-outline-primary">申请加入
+                                            </button>
+                                            {else/}
+                                            {/if}
+                                        </div>
+                                    </div>
+                                    <div class="aman-goods-info">
+                                        <dl style="height: auto">
+                                            <dt>战队宣言：</dt>
+                                            <dd>{$teaminfo.team_content} </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>队　　长：</dt>
+                                            <dd><a href="#" class="link-1">{$teaminfo.team_leader}</a></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>积　　分：</dt>
+                                            <dd>{$teaminfo.team_score}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>创建时间：</dt>
+                                            <dd>{$teaminfo.create_time|date="Y-m-d"}</dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>战队状态：</dt>
+                                            <dd>{if condition="$teaminfo.status eq '正常'" }
+                                                <span class="badge bg-success-bright text-success">{$teaminfo.status}</span>
+                                                {elseif condition="$teaminfo.status eq '封禁'"}
+                                                <span class="badge bg-danger-bright text-danger">{$teaminfo.status}</span>
+                                                {elseif condition="$teaminfo.status eq '待审核'"}
+                                                <span class="badge bg-secondary-bright text-white">{$teaminfo.status}</span>
+                                                {/if}
+
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="col-3 text-center honor" data-toggle="popover" data-placement="top" title="" data-content="Bugku AWD S1赛季倔强青铜段位" data-original-title="AWD-S1倔强青铜">
+                                            <!--<img src="/upload/20210904/b6f3a1ec4655096836b186850528617c.png" style="height:80px;" alt="">
+                                            <p class="m-t-10">AWD-S1倔强青铜</p>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-center m-b-15">战队成员</h4>
+                                    <ul class="list-group list-group-flush">
+                                        {volist id="vo" name="$userlist"}
+                                        <li class="list-group-item d-flex align-items-center pl-0 pr-0">
+                                            <div>
+                                                <figure class="avatar mr-3 position-relative">
+                                                    {if condition="$vo.frame_img neq ''"}
+                                                    <img src="{$vo.frame_img}" class="aman-avatar-border" style="left:-10%;top:-5%;width:115%!important;height:108%!important">
+                                                    {/if}
+
+                                                    <img src="{$vo.img}" class="rounded-circle">
+                                                </figure>
+                                            </div>
+                                            <div>
+                                                <h6>{$vo.cid}</h6>
+                                                {if condition="$vo.position eq '队长'" }
+                                                <span class="badge bg-danger-bright text-danger">队长</span>
+                                                {elseif condition="$vo.position eq '副队长'"}
+                                                <span class="badge bg-warning-bright text-warning">副队长</span>
+                                                {else/}
+                                                <span class="badge bg-primary-bright text-primary">成员</span>
+                                                {/if}
+                                            </div>
+                                            <div class="ml-auto text-warning">
+                                                <small>积分：</small>
+                                                {$vo.score}                                   </div>
+                                        </li>
+                                        {/volist}
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--begin:解题动态-->
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-center m-b-15">解题动态</h4>
+                                    <div class="card-scroll" tabindex="1" style="padding-right: 10px; outline: none;max-height: 700px;height: auto">
+                                        <div class="timeline">
+                                            {volist id="an" name="answerlist"}
+                                            <div class="timeline-item pb-0">
+                                                <div>
+                                                    <figure class="avatar avatar-sm mr-3 bring-forward">
+                                                        <img src="{$an.img}" class="rounded-circle" alt="avatar">
+                                                    </figure>
+                                                </div>
+                                                <div>
+                                                    <h6 class="d-flex justify-content-between mb-4">
+                                                <span>
+                                                    <span>{$an.cid}</span>
+                                                    攻破了 <a class="link-1" href="#">{$an.tid}</a>
+                                                </span>
+                                                        <span class="text-muted font-weight-normal">{$an.create_time}</span>
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                            {/volist}
+                                           <!--end:解题动态-->
+
+                                            <span class="text-muted text-center"> --只显示最近的12条记录--</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal -->
+        <div class="modal fade" id="applyModal" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true">
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-white border-bottom">
+                        <h5 class="modal-title">申请加入</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="ti-close"></i>
+                        </button>
+                    </div>
+                    <form id="applyForm" novalidate="">
+                        <div class="modal-body">
+
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">战队名称:</label>
+                                <input type="text" name="teamname" value="{$teaminfo.team_name}" class="form-control" readonly="">
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">申请留言:</label>
+                                <textarea required="" name="reason" data-id="" class="form-control" style="resize: unset" id="message-text"></textarea>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button class="btn btn-primary">申请</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+<script type="text/javascript">
+
+    $("#applyForm").on('submit',function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        let form=$(this);
+        if(form[0].checkValidity()==false){
+            form.addClass("was-validated");
+            return ;
+        }
+        //console.log($(this).serialize())
+        $.ajax({
+            url : "/users/teamapply",
+            method: 'post',
+            data:$(this).serialize(),
+            success(res) {
+                form[0].reset();
+                $("#applyModal").modal('hide');
+                if(res.code === 1){
+                    swal(res.msg, '', "success").then(function () {
+                        location.reload()
+                    });
+                }else{
+                    swal(res.msg, '', "error").then(function () {
+                        location.reload()
+                    });
+                }
+
+            }
+        })
+    });
+</script>
+{/block}

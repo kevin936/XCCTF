@@ -1,0 +1,94 @@
+{extend name="public/base"}
+
+{block name="title"}战队列表{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="page-header justify-content-between">
+                <div>
+                    <a href="{:url('/teamgrid')}" class="btn btn-outline-primary active" data-toggle="tooltip" data-original-title="Grid">
+                        <i class="fa fa-th-large"></i>
+                    </a>
+                    <a href="{:url('/teamlist')}" class="btn btn-outline-primary  ml-2" data-toggle="tooltip" data-original-title="List">
+                        <i class="fa fa-th-list"></i>
+                    </a>
+                    <a href="{:url('/users/myteam')}" class="btn btn-outline-primary  ml-2" data-toggle="tooltip" data-original-title="我的战队">
+                        <i class="fa fa-users"> 我的战队</i>
+                    </a>
+                </div>
+                <form>
+                    <div class="input-group">
+                        <input type="text" name="teamname" value="" class="form-control" placeholder="请输入战队名称" required="">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" id="button-addon1">搜索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                {volist id="vo" name="teamlist"}
+                <div class="col-3">
+                    <div class="card">
+                        <div class="card-body">
+                           <!-- <img title="本赛季：倔强青铜" class="position-absolute" style="top: 5px;
+                    right: 5px;
+                    height: 50px;" src="/upload/20210904/71fb73160f7bf73d57e71bd034258587.png">-->
+
+                            <div class="d-flex justify-content-between mb-4">
+                                <div class="d-flex">
+                                    <div>
+                                        <figure class="avatar avatar-sm mr-1">
+                                            <img src="{$vo.team_img}" onerror="this.src='/static/images/face.png'" class="rounded">
+                                        </figure>
+                                    </div>
+                                    <div>
+                                        <a class="link-1 d-block" href="/teaminfo/id/{$vo.id}" style="line-height: 1rem">{$vo.team_name}</a>
+                                        <small class="text-muted">排名：{$i}</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-muted small mt-1 mb-3 aman-text-overflow" title="{$vo.team_content}">宣言：{$vo.team_content}</div>
+
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-muted mb-1 small">成立</div>
+                                    <div>{$vo.create_time|date="Y-m-d"}</div>
+                                </div>
+                                <div class="col">
+                                    <div class="text-muted mb-1 small">积分</div>
+                                    <div>{$vo.team_score}</div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="m-0">
+                        <div class="card-body">
+                            <div class="small mb-2">成员</div>
+                            <div class="avatar-group">
+                                {volist id ="user" name="$vo.teamusers"}
+                                <figure class="avatar avatar-sm">
+                                    <a href="/user/info/id/{$user.cid}" title="" data-toggle="tooltip" data-original-title="{$user.cid}">
+                                        <img src="{$user.uid_img}" class="rounded-circle">
+                                    </a>
+                                </figure>
+                                {/volist}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {/volist}
+
+
+
+
+
+            </div>
+            {$teamlist | raw}
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}

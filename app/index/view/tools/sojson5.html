@@ -1,0 +1,122 @@
+{extend name="public/base"}
+
+{block name="title"}BASE64编码解码{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/index.html">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/tools">工具箱</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Sojson v5 解密</li>
+                            </ol>
+                        </nav>
+                        <a href="/tools" class="btn btn-outline-primary btn-rounded">
+                            <i class="ti-angle-left mr-2"></i> 返回
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="">
+                                <div class="form-group">
+                                    <textarea placeholder="请输入加密后的Sojson.v5" id="code" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button id="decode" type="button" class="btn btn-primary m-r-15">开始破解</button>
+                                    <button onclick="js_format()" type="button" class="btn btn-primary">美化代码</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="结果" id="str" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/tools/jsbeautify.js"}
+<script>
+
+
+    $("#decode").click(function () {
+        let code=$.trim($("#code").val());
+        if(code==""){
+            toastr.warning("请输入密文");
+        }
+        $("#str").val(decode(code));
+    });
+    function js_format() {
+        $("#str").val(js_beautify($("#str").val(),2,'   '));
+    }
+    function decode(js_body) {
+        js_body=$.trim(js_body);
+        let js_arr = js_body.split("\n").pop().split(';'),
+            fun_name = /var\s+(_0x[a-z0-9]+)=/.exec(js_arr[6])[1],
+            reg_str = fun_name + '\\(' + "'([^']+)',\s*'([^']+)'" + '\\)',
+            js_str = js_arr.slice(54, js_arr.length - 4).join(' ;'),
+            code_shell = js_arr.slice(0, 54).join(';'),
+            shell_obj = eval("(function(){" + code_shell + ";return " + fun_name + "})()");
+        js_str = js_str.replace(new RegExp(reg_str, 'g'), function (str, id, key) {
+            return '"' + shell_obj(id, key) + '"';
+        }).replace(/([a-z0-9\-_A-Z)\]]+)\s?\[["']([^"']+)["']\]/g, '$1.$2').replace(/\\(?<!_\\)(0x[0-9a-f]+)/g, function (hex) {
+            return parseInt(hex).toString();
+        });
+        // 还原混淆
+        let obj = null, name = '';
+        js_str = js_str.replace(/{(var \s+(_0x[0-9a-z]+)=(\{(.*)\}));/g, function (str, code_str, _name, obj_str) {
+            obj = eval("(function () {return" + obj_str + "})()");
+            name = name;
+            return '{';
+        });
+        if (obj) {
+            let i = 5;
+            while (js_str.indexOf(name) && --i > 0) {
+                for (const key in obj) {
+                    if (!obj.hasOwnProperty(key)) continue;
+                    if (typeof obj[key] == 'function') {
+                        let fun_info = /function \s*_0x[0-9a-z]+\(([^)]*)\){return \s*([^;]+);}/.exec(obj[key].toString());
+                        js_str = js_str.replace(new RegExp(name + '\\. ' + key + '\\(([^())]* )\\)', 'g'), function (string, args_str) {
+                            let args = args_str.split(','),
+                                fun_args = fun_info[1].split(','),
+                                fun_body = fun_info[2];
+                            fun_args.forEach(function (item, index) {
+                                fun_body = fun_body.replace(item, args[index]);
+                            });
+                            return fun_body;
+                        });
+                    } else if (typeof obj[key] == 'string ') {
+                        js_str = js_str.replace(name + '.' + key, '"' + obj[key] + '"');
+                    } else {
+                        js_str = js_str.replace(name + '.' + key, obj[key].toString());
+                    }
+                }
+            }
+        }
+        return js_str.substring(0,js_str.indexOf(' ; ;(function(_0x'));
+    }
+
+</script>
+{/block}

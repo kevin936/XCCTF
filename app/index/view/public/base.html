@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{block name="title"}{/block}-{$name.value}</title>
+    <!--引入Bootstrap CSS-->
+    {css href="__CSS__/bootstrap.min.css"}
+    {css href="__CSS__/bootstrap-icons.css"}
+    {css href="__font__/css/font-awesome.min.css"}
+    {css href="__CSS__/app.css"}
+    {css href="__CSS__/toastr.min.css"}
+
+    {block name="css"}{/block}
+
+    <!--移动设备适配优先-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+</head>
+
+<body>
+
+<div class="preloader" style="">
+    <div class="preloader-icon"></div>
+</div>
+
+
+<div class="header" style=" ">
+
+    <div class="header-body" style="text-align: center;flex: unset;margin: 0 auto;padding: 0;">
+        <div class="header-logo">
+
+                <div class="m-top-search"><i class="icon font-search top-search"></i></div>
+                <a href="/" class="logo">
+                    <img src="{$logo.value}" class="logo-light" id="logo-light" alt="{$name.value}">
+                    <b class="shan"></b>
+                </a>
+                <div class="m-top-logo"><i class="nav-bar"><span></span><span></span><span></span></i></div>
+        </div>
+
+            <ul id="nav" class="navbar-nav nav nav-pills" style="margin: 0 120px;">
+
+                {volist id="nav" name="nav"}
+
+                    {if condition="$nav.nav_url neq '' and $nav.tid eq 0"}
+                    <li class="nav-item">
+                    <a class="nav-link" href="{$nav.nav_url}">{$nav.nav_name}</a>
+                    </li>
+                    {elseif condition="$nav.nav_url eq '' and $nav.tid eq 0" /}
+                    <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="nav-{$nav.id}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >{$nav.nav_name}</a>
+
+
+                    <div class="dropdown-menu">
+                        {volist id="twomenu" name="navtow"}
+                        {if condition="$twomenu.tid eq $nav.id"}
+                        <a class="dropdown-item" href="{$twomenu.nav_url}">{$twomenu.nav_name}</a>
+                        {/if}
+                       {/volist}
+                    </div>
+                    </li>
+
+                    {/if}
+
+
+                {/volist}
+
+            </ul>
+
+        <div class="header-body-right">
+            <ul class="navbar-nav float-right">
+                <!-- begin::header messages dropdown -->
+                {if condition="$count gt 0"}
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link nav-link-notify" title="Chats" data-toggle="dropdown"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-big">
+                        <div class="bg-primary p-4 text-center d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">信息</h5>
+                            <small class="opacity-7">{$count}条未读</small>
+                        </div>
+                        {volist id="message" name="message"}
+                        <div>
+                            <ul class="list-group list-group-flush" tabindex="3" style="overflow: hidden; outline: none;">
+                                <li>
+                                    <a href="{:url('/users/message')}" class="list-group-item d-flex align-items-center hide-show-toggler">
+                                        <div>
+                                            <figure class="avatar avatar-sm mr-2">
+                                                <span class="avatar-title bg-primary-bright text-primary rounded-circle">
+                                                    <i class="fa fa-bell"></i>
+                                                </span>
+                                            </figure>
+                                        </div>
+                                        <div class="flex-grow-1" type="font-size:12px">
+                                            <p class="mb-0 line-height-20 d-flex" style="width: 212px;word-break:break-all;">{$message.content|raw}
+                                            <span class="text-muted small"> &nbsp;[{$message.create_time}]</span>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        {/volist}
+                        <div class="p-2 text-right border-top">
+                            <ul class="list-inline small text-center">
+                                <li class="list-inline-item   mb-0 "><a href="/users/message.html">查看全部</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+                {/if}
+                <li>
+                    <a id="theme" href="#" class="nav-link nav-link-notify" title="夜间模式">
+                        </a>
+                </li>
+                {if condition="session('uid') neq ''"}
+                <!-- begin::user menu -->
+                <li class="nav-item dropdown2">
+                    <a href="#" class="nav-link" title="User menu" style="padding-right: 0" data-sidebar-target="#user-menu" role="button" id="infoMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mr-2 d-sm-inline d-none">{:session('users')}</span>
+                        <figure class="avatar avatar-sm">
+                            <img src="{:session('img')}" class="rounded-circle" alt="avatar">
+                        </figure>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="infoMenuLink">
+                        <a class="dropdown-item" href="{:url('users/info')}">个人信息</a>
+                        <a class="dropdown-item" href="{:url('users/myteam')}">我的战队</a>
+                        <a class="dropdown-item" href="{:url('users/setpass')}">修改密码</a>
+                        <a class="dropdown-item" href="{:url('users/logout')}">退出账号</a>
+                    </div>
+                </li>
+                <!-- end::user menu -->
+                {else/}
+                <a href="{:url('/login')}" class="btn btn-primary btn-rounded btn-sm ml-3 m-r-10 text-white">登录</a>
+                <a href="{:url('/register')}" class="btn btn-outline-primary btn-rounded btn-sm">注册</a>
+                {/if}
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+<!--页面主体部分-->
+
+{block name="main"}{/block}
+
+
+
+
+
+{block name="footer"}
+<footer class="content-footer mt-4" style="display: block;">
+    <div class="row" style="max-width: 1200px;margin: auto">
+
+        <div class="col-12" style="text-align: center">
+            <div style="text-transform: none;">
+                Powered by {$name.value}&amp;星辰信安 © 2021-{:date('Y')} All Rights Reserved
+                <a href="https://beian.miit.gov.cn/" target="_blank">{$beian.value}</a>
+            </div>
+        </div>
+    </div>
+
+</footer>
+{/block}
+
+
+<!--引入JS文件-->
+
+
+{JS href="__JS__/jquery-3.5.1.min.js"}
+{JS href="__JS__/bootstrap.bundle.min.js"}
+{js href="__JS__/feather.min.js"}
+{js href="__JS__/jquery.cookie.min.js"}
+{js href="__JS__/aman.js"}
+{js href="__JS__/app.js"}
+
+{JS href="__JS__/echarts.min.js"}
+{js href="__JS__/toastr.min.js"}
+{js href="__JS__/sweetalert.min.js"}
+
+
+{block name="js"}{/block}
+<script>
+    $(function () {
+
+        $("#nav .nav-item").find('a').each(function () {var a = $(this)[0];
+
+            if ($(a).attr("href") === location.pathname && $(a).attr("class") === 'nav-link') {
+                $(this).addClass("active");
+            } else {
+                $(this).removeClass("active");
+            }
+
+        });
+
+        $(".dropdown").each(function () {
+            var ta=$(this).find(".dropdown-item")
+            var cnt =ta.length;
+
+            for (i=0;i<ta.length;i++)
+            {
+
+                if ($(ta[i]).attr("href") === location.pathname) {
+                    $(this).addClass("show");
+                    break;
+                } else {
+                    $(this).removeClass("show");
+                }
+
+
+            }
+        });
+
+    })
+</script>
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+{extend name="public/base"}
+
+{block name="title"}我的战队{/block}
+
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row app-block">
+                        <div class="col-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="nav flex-lg-column flex-sm-row nav-pills" role="tablist" aria-orientation="vertical">
+                                        <a class="nav-link m-b-10" href="{:url('/users/info')}">
+                                            个人信息
+                                        </a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/message')}">消息中心</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/myteam')}">我的战队</a>
+                                        <a class="nav-link m-b-10 active" href="#">我的订单</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/setinfo')}">信息设置</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/setpass')}">修改密码</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-9">
+                            <div class="card">
+
+
+                                {if condition="$list neq ''"}
+                                <div class="card-body">
+                                    <button onclick="delorder()" class="btn  float-right btn-outline-primary btn-sm">清空订单记录</button>
+                                    <h6 class="card-title">我的订单</h6>
+
+                                    <div class="table-responsive">
+                                        <table id="orders" class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>商品信息</th>
+                                                <th>总价</th>
+                                                <th>状态</th>
+                                                <th>时间</th>
+                                                <th>操作</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {volist id="vo" name="orderlist"}
+                                            <tr>
+                                                <td>{$vo.id}</td>
+                                                <td>
+                                                    <div class="d-flex align-items-center  m-t-10">
+                                                    <div class="avatar mr-3 avatar-sm">
+                                                        <img src="{$vo.shp_img}">
+                                                    </div>
+                                                    <div>
+                                                        <p class="mb-0 small">{$vo.shp_name}</p>
+                                                        <small class="small text-muted">
+                                                            规格：{$vo.shp_score}*{$vo.shp_unit};
+                                                        </small>
+                                                    </div>
+
+                                                </div>
+                                                </td>
+                                                <td><span class="text-danger">{$vo.shp_num}</span></td>
+                                                <td>
+                                                    {if condition="$vo.status eq 1"}
+                                                    <span class="badge bg-secondary-bright text-secondary">兑换商品</span>
+                                                    {elseif condition="$vo.status eq 2"}
+                                                    <span class="badge bg-warning-bright text-warning">平台确认</span>
+                                                    {elseif condition="$vo.status eq 3"}
+                                                    <span class="badge bg-primary-bright text-white">平台发货</span>
+                                                    {elseif condition="$vo.status eq 4"}
+                                                    <span class="badge bg-success-bright text-success">交易完成</span>
+                                                    {/if}
+
+                                                </td>
+                                                <td>{$vo.create_time|date="Y-m-d"}</td>
+                                                <td>
+                                                    <a class="link-1" href="/store/order/id/{$vo.shp_id}">查看</a>
+                                                </td>
+                                            </tr>
+                                            {/volist}
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                             {else/}
+                                <div class="card-body text-center p-t-b-50">
+                                    <div class="text-center p-t-b-30">
+                                        <img style="height: 120px;" src="__images__/goods-cover.png" alt="">
+                                        <p class="text-muted">暂无任何订单</p>
+                                    </div>
+                                </div>
+                                {/if}
+
+
+                            <!--end-->
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--创建战队窗口-->
+
+
+    </div>
+</div>
+
+{/block}
+
+{block name="footer"}{/block}
+{block name="js"}
+<script type="text/javascript">
+    function delorder(){
+        $.ajax({
+            url: "/users/delorder",
+            method: "get",
+            success(res){
+                swal(res.msg, '', "success").then(function () {
+                    location.reload()
+                });
+            }
+        })
+    }
+</script>
+
+{/block}

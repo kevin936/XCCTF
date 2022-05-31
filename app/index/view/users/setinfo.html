@@ -1,0 +1,123 @@
+{extend name="public/base"}
+
+{block name="title"}信息设置{/block}
+
+{block name="css"}
+{css href="__font__/css/font-awesome.min.css"}
+{css href="__CSS__/aman.css"}
+{/block}
+{block name="header"}{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row app-block">
+                        <div class="col-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="nav flex-lg-column flex-sm-row nav-pills" role="tablist" aria-orientation="vertical">
+                                        <a class="nav-link m-b-10" href="{:url('/users/info')}">
+                                            个人信息
+                                        </a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/message')}">消息中心</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/myteam')}">我的战队</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/order')}">我的订单</a>
+                                        <a class="nav-link m-b-10 active" href="#">信息设置</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/setpass')}">修改密码</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {volist id='infonow' name="infonow"}
+                        <div class="col-9">
+                            <div class="card">
+
+                                <div class="card-img-top aman-user-bg">
+                                    <img id="userBg" src="/static/images/user-banner.jpg">
+                                    <div class="aman-user-bg-hover">
+                                        <i class="fa fa-camera"></i>
+                                    </div>
+                                    <input type="file" id="uploadBg">
+
+                                </div>
+
+                                <div class="card-body  m-t-70-minus" id="info">
+                                    <form id="userForm" class="needs-validation" novalidate="">
+                                        <div class="mb-3 text-center">
+                                            <div class="aman-user-avatar m-auto">
+                                                <img class="rounded-circle" id="avatar" src="{$infonow.img}">
+
+                                                <div class="aman-user-avatar-hover rounded-circle">
+                                                    <i class="fa fa-camera"></i>
+                                                </div>
+                                                <input type="file" id="uploadAvatar">
+                                            </div>
+                                            <h5>{$infonow.username}</h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-9  m-auto">
+
+                                                <div class="form-group">
+                                                    <label>昵称</label>
+                                                    <input type="text" required="" name="nickname" class="form-control" value="{$infonow.username}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>邮箱地址</label>
+                                                    <input type="text" name="email" class="form-control" value="{$infonow.email}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>手机号</label>
+                                                    <input type="text" name="phone" class="form-control" value="{$infonow.phone}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>头像边框</label>
+                                                    <div class="card border shadow-none">
+                                                        <div class="card-body p-3">
+                                                            <ul class="ul-border">
+                                                                {volist id="frame" name="frame"}
+                                                                {if condition="$infonow.frame_img eq $frame.frame_img"}
+                                                                <li class="selected" data-id="{$frame.frame_img}">
+                                                                    <img src="{$frame.frame_img}" class="img-fluid" alt="image">
+                                                                    <small class="text-center aman-text-overflow">{$frame.frame_name}</small>
+                                                                </li>
+                                                                {else/}
+                                                                <li class="" data-id="{$frame.frame_img}">
+                                                                    <img src="{$frame.frame_img}" class="img-fluid" alt="image">
+                                                                    <small class="text-center aman-text-overflow">{$frame.frame_name}</small>
+                                                                </li>
+                                                                {/if}
+                                                                {/volist}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="alert alert-warning alert-with-border">
+                                                    注：请保证邮箱和手机号至少有一项能联系到您，否则将错过赛事通知！
+                                                </div>
+                                                <button class="btn btn-primary">保存</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}{js href="__JS__/setinfo.js"}{/block}
+

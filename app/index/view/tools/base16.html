@@ -1,0 +1,97 @@
+{extend name="public/base"}
+
+{block name="title"}BASE16编码解码{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/index.html">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/tools">工具箱</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">BASE16编码解码</li>
+                            </ol>
+                        </nav>
+                        <a href="/tools" class="btn btn-outline-primary btn-rounded">
+                            <i class="ti-angle-left mr-2"></i> 返回
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+
+                            <form action="">
+                                <div class="form-group">
+                                    <textarea placeholder="请输入需要加密/解密的内容" id="code" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button id="encode" type="button" class="btn btn-primary m-r-15">加密</button>
+                                    <button id="decode" type="button" class="btn btn-outline-primary">解密</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="加密/解密的结果" id="res" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+
+<script>
+
+    $("#encode").click(function () {
+        var content=$('#code').val();
+        if(content==""){
+            toastr.warning("请输入要加密的内容");
+            return "";
+        }
+        $.ajax({
+            url: "/tools/base16en",
+            method: "post",
+            data:{content:content},
+            success (res) {
+                $('#res').val(res.content);
+            }
+        });
+    });
+
+    $("#decode").click(function () {
+        var content=$('#code').val();
+        if(content==""){
+            toastr.warning("请输入要解密的内容");
+            return "";
+        }
+        $.ajax({
+            url: "/tools/base16de",
+            method: "post",
+            data:{content:content},
+            success(res) {
+                $('#res').val(res.content);
+            }
+        });
+
+    });
+
+</script>
+{/block}

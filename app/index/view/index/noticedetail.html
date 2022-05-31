@@ -1,0 +1,89 @@
+{extend name="public/base"}
+
+{block name="title"}战队列表{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-9 m-auto">
+                    <div class="card">
+                        <div class="card-body">
+                            <h2 class="card-text font-size-26 font-weight-bold m-b-20">{$ontice.action_title}</h2>
+                            <p class="card-text">
+                                <a class="text-muted mr-2"><i class="fa fa-user-o"></i> {$name.username}</a>
+                                <span class="text-muted mr-2"><i class="fa fa-clock-o"></i> {$ontice.action_time}</span>
+                                <span class="text-muted mr-2"><i class="fa fa-eye"></i> {$ontice.action_count}</span>
+                                <span class="text-muted mr-2"><i class="fa fa-comments-o"></i> 12</span>
+                            </p>
+                            <hr>
+                            <article role="article">
+                                 {$ontice.action_text}
+                            </article>
+                        </div>
+
+                    </div>
+                    <!--评论-->
+                    <!--<div class="card comments">
+                        <div class="card-body">
+                            <div class="d-flex m-b-10">
+                                <div>
+                                    <figure class="avatar avatar-sm mr-3">
+                                        <img src="/upload/user/20210316/dc51b13d7004fec71e06fe88b2503278.jpg" class="rounded-circle" alt="...">
+                                    </figure>
+                                </div>
+                                <form class="flex-grow-1 commentForm" novalidate="">
+                                    <div class="form-group">
+                                        <textarea required="" name="content" rows="2" class="form-control " style="resize: none" placeholder="说点什么吧"></textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-primary float-right commentSubmit">回复</button>
+                                </form>
+                            </div>
+                            <h6 class="card-title text-center">评论（12）<hr></h6>
+                            <div>
+
+                                <div class="media mb-4" id="comment-12417">
+                                    <div class="d-flex align-items-center">
+                                        <figure class="avatar mr-3 position-relative">
+                                            <img src="/upload/user/20211029/e2e8594783dea90c3a87c6ddddff8f28.PNG" class="rounded-circle">
+                                        </figure>
+                                    </div>
+                                    <div class="media-body">
+                                        <h5 class="mb-1">MrHuang                                    <small class="text-muted">2天前</small>
+                                        </h5>
+                                        <p>支持动态积分，希望跟上复现wp</p>
+                                        <div class="comment-tools mt-4">
+                                            <div>
+                                                <span class="cursor-pointer commentReply  m-r-20" data-id="12417" data-toggle="tooltip" data-original-title="Reply">
+                                                    <i class="fa fa-edit"></i> 回复
+                                                </span>
+                                                <span class=" cursor-pointer commentLike" data-num="0" data-id="12417" href="#" data-toggle="tooltip" data-original-title="Like">
+                                                    <i class="fa fa-thumbs-o-up"></i> <span>0</span>
+                                                </span>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+
+
+                            </div>
+                            <div class="m-t-30"><ul class="pagination pagination-sm pagination-rounded"><li class="page-item disabled"><span class="page-link">«</span></li> <li class="page-item active"><span class="page-link">1</span></li><li class="page-item"><a class="page-link" href="/notice/detail/id/42.html?page=2">2</a></li> <li class="page-item"><a class="page-link" href="/notice/detail/id/42.html?page=2">»</a></li></ul></div>
+                        </div>
+                    </div>-->
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+

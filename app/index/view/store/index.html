@@ -1,0 +1,139 @@
+{extend name="public/base"}
+
+{block name="title"}积分商城{/block}
+{block name="css"}
+<style>
+    .aman-avatar-border {
+        position: absolute;
+    }
+    .aman-goods-img {
+        width: 100%;
+        height: 180px;
+        border-top-left-radius: 0.25rem;
+        border-top-right-radius: 0.25rem;
+    }
+    .aman-hover-img{
+        overflow: hidden;
+    }
+    .aman-hover-img img{
+
+        /* transition: all 0.8s; */
+
+        -moz-transition: all 0.8s;
+
+        -o-transition: all 0.8s;
+    }
+    .aman-hover-img img:hover{
+        cursor: pointer;
+        transform: scale(1.1);
+        transition: all 0.8s;
+        -moz-transition: all 0.8s;
+        -o-transition: all 0.8s;
+    }
+</style>
+{/block}
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-sm-8">
+
+                            <div class="row">
+                                {volist id="vo" name="storelist"}
+                                <div class="col-md-4">
+                                    <div class="card">
+
+                                        <a href="/store/detail/id/{$vo.id}" class="aman-hover-img">
+                                            <img src="{$vo.img}"  class="aman-goods-img" alt="image">
+                                        </a>
+                                        <div class="card-body p-t-b-10">
+                                            <h6 class="card-title mb-2 aman-text-overflow">{$vo.name}</h6>
+                                            <div class="d-flex align-items-center">
+                                                <div class="font-weight-bold">
+                                                    <span class="font-size-30 text-danger">{$vo.score}</span>
+                                                    <sup>
+                                                        <small class="font-size-11">积分</small>
+                                                    </sup>
+                                                </div>
+                                                <div class="text-right ml-auto">
+                                                    <span class="small text-muted">库存：{$vo.stock}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                {/volist}
+
+
+
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-4">
+
+                                <div class="card" style="height: 200px;">
+                                    <div class="card-body">
+                                        <div class="text-center">
+                                            <figure class="avatar m-b-15 position-relative" style="height: 4rem;width:3rem">
+                                                {if condition="$info.frame_img neq ''"}
+                                                <img src="{$info.frame_img}" class="aman-avatar-border" style="left:-26%;top:-6%;width:4.5rem!important;height:4.5rem!important;position: absolute;">
+                                                {/if}
+                                                <img src="{$info.img}" class="rounded-circle">
+
+                                            </figure>
+                                            <h6>Hi~,{$info.username}</h6>
+                                        </div>
+                                        <div class="col-12 text-center text-muted font-size-14">
+                                            积分：<span class="text-warning font-size-16">{$info.score}</span>
+                                        </div>
+                                        <div class="text-center mt-2">
+                                            <a href="{:url('/users/order')}" class="btn btn-outline-primary btn-rounded">我的订单</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title text-center m-b-15">兑换动态</h4>
+                                    <div tabindex="1" style="overflow: hidden;padding-right: 10px;">
+                                        {volist id="or" name="orderlist"}
+                                        <div class="d-flex align-items-center m-b-20">
+                                            <div class="pr-3">
+                                                <a class="avatar">
+                                                    <img src="{$or.shp_img}" onerror="this.src='/static/images/goods-cover.png'" class="rounded" alt="image">
+                                                </a>
+                                            </div>
+                                            <div>
+                                                <a class="mb-0">{$or.username}</a>
+                                                <p class="mb-0">兑换了 <a href="#" class="link-1">{$or.shp_name}</a></p>
+                                            </div>
+                                            <div class="text-right ml-auto">
+                                                <span class="small text-muted">{$or.create_time}</span>
+                                            </div>
+                                        </div>
+
+                                        {/volist}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}

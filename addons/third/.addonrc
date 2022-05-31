@@ -1,0 +1,1 @@
+{"menus":["third","third\/index","third\/del"],"files":["app\\admin\\controller\\Third.php","app\\admin\\lang\\zh-cn\\third.php","app\\admin\\model\\Third.php","app\\admin\\validate\\Third.php","app\\admin\\view\\third\\index.html","app\\index\\controller\\Third.php","app\\index\\view\\third\\prepare.html","public\\assets\\js\\backend\\third.js"]}

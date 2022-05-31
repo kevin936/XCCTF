@@ -1,0 +1,503 @@
+{extend name="public/base"}
+
+{block name="title"}我的战队{/block}
+
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row app-block">
+                        <div class="col-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="nav flex-lg-column flex-sm-row nav-pills" role="tablist" aria-orientation="vertical">
+                                        <a class="nav-link m-b-10" href="{:url('/users/info')}">
+                                            个人信息
+                                        </a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/message')}">消息中心</a>
+                                        <a class="nav-link m-b-10 active" href="#">我的战队</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/order')}">我的订单</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/setinfo')}">信息设置</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/setpass')}">修改密码</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-9">
+                            <div class="card">
+
+                                <!--未加入战队-->
+                                {if condition="$teamstatus eq 0"}
+                                    {assign name="empty" value='<div class="card-body">
+                                    <div class="alert alert-warning d-flex align-items-center" role="alert">
+                                        <i class="fa fa-warning mr-2"></i>您提交的加入战队申请，正在审核中，请耐心等待。24小时后可以 <span id="cancelApply" class="text-primary cursor-pointer">撤销</span> 申请
+                                    </div>
+                                    </div>'}
+
+
+                                {else/}
+                                    {assign name="empty" value='<div class="card-body text-center p-t-b-50">
+                                    <div class="text-center p-t-b-30">
+                                        <img style="height: 120px;" src="__images__/goods-cover.png" alt="">
+                                        <p class="text-muted">暂无加入任何战队</p>
+                                    </div>    <h6 class="text-muted">
+
+                                    是否
+                                    <span data-toggle="modal" data-target="#createModal" class="text-primary cursor-pointer">创建</span> 或
+                                    <span data-toggle="modal" data-target="#applyModal" class="text-primary cursor-pointer">加入</span>战队
+                                    </h6>
+                                    </div>'}
+
+                                {/if}
+
+
+
+                                {volist id="info" name="info" empty="$empty"}
+                                <!--是否为队长-->
+                                {if condition="$info.team_leader eq session('users')"}
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        <span>我的战队</span>
+                                        <button id="delTeam" class="btn  float-right btn-outline-danger btn-sm">解散战队</button>
+                                    </h6>
+                                    <ul class="nav  nav-pills justify-content-center" id="myTab">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#team-info" role="tab" aria-selected="true">战队信息</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#team-users" role="tab" aria-selected="false">
+                                                战队成员
+                                            </a>
+                                        </li>
+                                        <li class=" nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#team-apply" role="tab" aria-selected="true">
+                                                申请审核
+                                                {if condition="$count neq 0"}
+                                                <span id="applyCount" class="badge badge-danger badge-pill m-l-5">{$count}</span>
+                                                {/if}
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {else/}
+                                <div class="card-body">
+                                    <h6 class="card-title">
+                                        <span>我的战队</span>
+                                        <button id="quitTeam" class="btn  float-right btn-outline-danger btn-sm">退出战队</button>
+                                    </h6>
+                                    <ul class="nav  nav-pills justify-content-center" id="myTab">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#team-info" role="tab" aria-selected="true">战队信息</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#team-users" role="tab" aria-selected="false">
+                                                战队成员
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                {/if}
+                                <!---->
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade active show" id="team-info" role="tabpanel">
+                                        <div class="card-body ">
+                                            <div class="d-flex justify-content-between  mb-4">
+                                                <div class="d-flex">
+                                                    <div>
+                                                        <figure class="avatar mr-3">
+                                                            <img src="{$info.team_img}" class="rounded">
+                                                        </figure>
+                                                    </div>
+                                                    <div>
+                                                        <h5 class="mt-0">战队：{$info.team_name}</h5>
+                                                        <small class="text-muted">宣言：{$info.team_content}</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="aman-goods-info">
+
+                                                <dl>
+                                                    <dt>队　　长：</dt>
+                                                    <dd><a href="#" class="link-1">{$info.team_leader}</a></dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>我的职位：</dt>
+                                                    <dd>
+                                                        {if condition="$info.team_leader eq session('users')"}
+                                                        <span class="badge bg-danger-bright text-danger">队长</span>
+                                                        {else/}
+                                                        <span class="badge bg-primary-bright text-primary">成员</span>
+                                                        {/if}
+
+                                                    </dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>积　　分：</dt>
+                                                    <dd>{$info.team_number}</dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>创建时间：</dt>
+                                                    <dd>2022-03-09 21:55:22</dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>战队状态：</dt>
+                                                    <dd><span class="badge bg-success-bright text-success">{$info.team_status}</span></dd>
+                                                </dl>
+                                            </div>
+                                            {if condition="$myapply.position eq '队长' || $myapply.position eq '副队长'"}
+                                            <div class="text-center">
+                                                <button data-toggle="modal" data-target="#editModal" class="btn btn-primary">编辑</button>
+                                            </div>
+                                            {/if}
+                                        </div>
+                                    </div>
+
+                                    <div class="tab-pane fade" id="team-users" role="tabpanel">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="table-users" class="table table-lg">
+                                                    <thead>
+
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>成员</th>
+                                                        <th class="text-center">类型</th>
+                                                        <th class="text-center">积分</th>
+                                                        {if condition="$myapply.position eq '队长' || $myapply.position eq '副队长'"}
+                                                        <th>操作</th>
+                                                        {/if}
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {volist id="teamlist" name="teamlist"}
+                                                    <tr>
+                                                        <td>{$i}</td>
+                                                        <td>
+                                                            <a href="#" class="link-1">
+                                                                <figure class="avatar avatar-sm mr-2 position-relative">
+                                                                    {if condition="$teamlist.frame_img neq ''"}
+                                                                    <img src="{$teamlist.frame_img}" class="aman-avatar-border" style="left:-19%;top:-13%;width:136%!important;height:125%!important">
+                                                                    {/if}
+                                                                    <img src="{$teamlist.img}" class="rounded-circle" alt="avatar">
+                                                                </figure>{$teamlist.cid}
+                                                                                              </a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            {if condition="$teamlist.position eq '队长'"}
+                                                            <span class="badge bg-danger-bright text-danger">{$teamlist.position}</span>
+                                                            {else/}
+                                                            <span class="badge bg-primary-bright text-primary">{$teamlist.position}</span>
+                                                            {/if}
+
+                                                        </td>
+
+
+
+                                                        <td class="text-center">{$teamlist.score}</td>
+                                                        {if condition="$myapply.position eq '队长'"}
+
+                                                            {if condition="$teamlist.position eq '队长'"}
+                                                                <td></td>
+                                                            {else/}
+
+                                                                <td>
+                                                                    <div class="dropdown 1">
+                                                                        <a href="#" class="btn btn-outline-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+
+                                                                        <div class="dropdown-menu dropdown-menu-right mobPosDropdown" x-placement="bottom-end" style="display: none; width: 184px; font-size: 14px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-159px, 22px, 0px);">
+                                                                            <a data-id="{$teamlist->getData('cid')}" class="editUser dropdown-item" href="#">编辑</a>
+                                                                            <a data-id="{$teamlist->getData('cid')}" class="transferUser dropdown-item" href="#">转让</a>
+                                                                            <div class="dropdown-divider"></div>
+                                                                            <a data-id="{$teamlist->getData('cid')}" class="removeUser dropdown-item text-danger" href="#">移除</a>
+                                                                        </div></div>
+                                                                </td>
+                                                            {/if}
+
+                                                        {elseif condition="$myapply.position eq '副队长'"/}
+                                                            {if condition="$teamlist.position eq '队长' || $teamlist.position eq '副队长'"}
+                                                                <td></td>
+                                                            {else/}
+
+                                                            <td>
+                                                                <div class="dropdown 2">
+                                                                    <a href="#" class="btn btn-outline-light btn-sm" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+
+                                                                    <div class="dropdown-menu dropdown-menu-right mobPosDropdown" x-placement="bottom-end" style="display: none; width: 184px; font-size: 14px; position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-159px, 22px, 0px);">
+                                                                        <a data-id="{$teamlist->getData('cid')}" class="editUser dropdown-item" href="#">编辑</a>
+                                                                        <a data-id="{$teamlist->getData('cid')}" class="transferUser dropdown-item" href="#">转让</a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a data-id="{$teamlist->getData('cid')}" class="removeUser dropdown-item text-danger" href="#">移除</a>
+                                                                    </div></div>
+                                                            </td>
+                                                            {/if}
+
+
+
+
+                                                        {/if}
+
+
+
+
+                                                    </tr>
+                                                    {/volist}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="tab-pane fade" id="team-apply" role="tabpanel">
+                                        <div class="card-body">
+                                            <div class="table-apply">
+                                                <table id="project-list" class="table table-lg">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>申请人</th>
+                                                        <th class="text-center">申请留言</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    {volist id="applylist" name="applylist"}
+                                                    <tr>
+                                                        <td>{$i}</td>
+                                                        <td>
+                                                            <a href="#" class="link-1">
+                                                                <figure class="avatar avatar-sm mr-2">
+                                                                    <img src="{$applylist.uid_img}" class="rounded-circle" alt="avatar">
+                                                                </figure>
+                                                                {$applylist.cid}                               </a>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <span data-id="{$applylist->getData('cid')}" class="lookApply text-primary cursor-pointer">查看</span>
+                                                        </td>
+                                                        <td>
+                                                            <div class="dropdown">
+                                                                <a href="#" class="btn btn-outline-light btn-sm" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+                                                                <div class="dropdown-menu dropdown-menu-right">
+                                                                    <a data-id="{$applylist->getData('cid')}" class="agreeApply dropdown-item" href="#">同意</a>
+                                                                    <a data-id="{$applylist->getData('cid')}" class="refuseApply dropdown-item" href="#">拒绝</a>
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <a data-id="{$applylist->getData('cid')}" class="delApply dropdown-item text-danger" href="#">删除</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {/volist}
+                                                    </tbody>
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                {/volist}
+
+
+
+
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--创建战队窗口-->
+
+    {volist id="vo" name="infoedt"}
+    <div class="modal fade" id="editModal" tabindex="-1" data-backdrop="static" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-white border-bottom">
+                    <h5 class="modal-title">编辑战队</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="createForm">
+                        <div class="mb-3 text-center">
+                            <div class="aman-user-avatar m-auto" style="height: 80px;width: 80px;">
+                                <img id="logoImg" src="{$vo.team_img}">
+                                <div class="aman-user-avatar-hover rounded-circle" style="line-height: 80px;">
+                                    <i class="fa fa-camera"></i>
+                                </div>
+                                <input id="logo" name="file" type="file">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-9  m-auto">
+                                <div class="form-group">
+                                    <label>战队名称</label>
+                                    <input type="text" required="" name="teamname" class="form-control" value="{$vo.team_name}">
+                                </div>
+                                <div class="form-group">
+                                    <label>战队宣言</label>
+                                    <input name="manifesto" required="" type="text" class="form-control" value="{$vo.team_content}">
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="createTeam" type="button" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {/volist}
+
+    <div class="modal fade" id="applyModal" tabindex="-1" role="dialog" data-backdrop="static" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-white border-bottom">
+                    <h5 class="modal-title">加入战队</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="ti-close"></i>
+                    </button>
+                </div>
+                <form id="applyForm" novalidate="">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">战队名称:</label>
+                            <input required="" type="text" name="teamname" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">申请留言:</label>
+                            <textarea required="" name="reason" data-id="" class="form-control" style="resize: unset" id="message-text"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary">申请</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="createModal" tabindex="-1" data-backdrop="static" role="dialog" style="display:none;" aria-modal="true">
+        <div class="modal-dialog  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-white border-bottom">
+                    <h5 class="modal-title">创建战队</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+
+                    <form id="createForm" class="needs-validation" novalidate>
+                        <div class="mb-3 text-center">
+                            <div class="aman-user-avatar m-auto" style="height: 80px;width: 80px;">
+                                <img id="logoImg" src="__images__/teamAvatar.png">
+                                <div class="aman-user-avatar-hover rounded-circle" style="line-height: 80px;">
+                                    <i class="fa fa-camera"></i>
+                                </div>
+                                <input id="logo" type="file" name="file">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-9  m-auto">
+                                <div class="form-group">
+                                    <label>战队名称</label>
+                                    <input type="text" required="" name="teamname" class="form-control" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>战队宣言</label>
+                                    <textarea name="desc" class="form-control" style="resize: unset"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="createTeam" class="btn btn-primary">创建</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {volist id="vo" name="infoedt"}
+    <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-sm  modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-white border-bottom">
+                    <h5 class="modal-title">角色设置</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="ti-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select class="form-control" id="roleSelect">
+                            <option value="1">副队长</option>
+                            <option value="0">成员</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="updateRole" class="btn btn-primary">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {/volist}
+
+
+
+
+</div>
+
+
+
+{/block}
+
+{block name="footer"}{/block}
+{block name="js"}{js href="__JS__/myteam.js"}{/block}
+<div class="swal-overlay" tabindex="-1">
+    <div class="swal-modal" role="dialog" aria-modal="true">
+        <div class="swal-title" style="">申请留言</div>
+        <div class="swal-text" style=""></div>
+        <div class="swal-footer">
+            <div class="swal-button-container">
+
+            <button class="swal-button swal-button--confirm">OK</button>
+
+            <div class="swal-button__loader">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>

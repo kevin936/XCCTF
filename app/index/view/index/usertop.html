@@ -1,0 +1,127 @@
+{extend name="public/base"}
+{block name="title"}个人排行榜{/block}
+
+{block name="header"}{/block}
+
+{block name="main"}
+
+
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-3 mx-auto text-center">
+    <h4 class="display-5">个人排行榜</h4>
+</div>
+
+<div class="container">
+    <div id="container" style="height: 600px;"></div>
+
+    <div class="container pt-4 border">
+        <div class="row">
+            <div class="col text-center pl-5 pr-5">
+                <h5>WEB排行榜</h5>
+                <table class="table table-sm">
+                    <thead>
+                    <tr class="border">
+                        <th scope="col">id</th>
+                        <th scope="col">用户名</th>
+                        <th scope="col">已解题数</th>
+
+                    </tr>
+                    </thead>
+                    {volist id='weblist' name='weblist'}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{$weblist.id}</th>
+                        <td>{$weblist.username}</td>
+                        <td>{$weblist.flag_web}</td>
+
+                    </tr>
+                    </tbody>
+                    {/volist}
+                </table>
+            </div>
+            <div class="col text-center pl-5 pr-5">
+                <h5>MISC排行榜</h5>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">用户名</th>
+                        <th scope="col">已解题数</th>
+
+                    </tr>
+                    </thead>
+                    {volist id='misclist' name='misclist'}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{$misclist.id}</th>
+                        <td>{$misclist.username}</td>
+                        <td>{$misclist.flag_misc}</td>
+
+                    </tr>
+                    </tbody>
+                    {/volist}
+                </table>
+            </div>
+            <div class="w-100 pt-3"></div>
+            <div class="col text-center pl-5 pr-5">
+                <h5>CRYPTO排行榜</h5>
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">用户名</th>
+                        <th scope="col">已解题数</th>
+
+                    </tr>
+                    </thead>
+                    {volist id='cryptolist' name='cryptolist'}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{$cryptolist.id}</th>
+                        <td>{$cryptolist.username}</td>
+                        <td>{$cryptolist.flag_crypto}</td>
+
+                    </tr>
+                    </tbody>
+                    {/volist}
+                </table>
+            </div>
+            <div class="col text-center pl-5 pr-5">
+                <h5>Pwn排行榜</h5>
+
+                <table class="table table-sm">
+                    <thead>
+                    <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">用户名</th>
+                        <th scope="col">已解题数</th>
+
+                    </tr>
+                    </thead>
+                    {volist id='pwnlist' name='pwnlist'}
+                    <tbody>
+                    <tr>
+                        <th scope="row">{$pwnlist.id}</th>
+                        <td>{$pwnlist.username}</td>
+                        <td>{$pwnlist.flag_pwn}</td>
+
+                    </tr>
+                    </tbody>
+                    {/volist}
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--底部-->
+{/block}
+
+
+
+<!--引入JS文件-->
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/top.js"}
+
+{/block}

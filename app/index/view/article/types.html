@@ -1,0 +1,262 @@
+{extend name="public/base"}
+
+{block name="title"}文章列表{/block}
+{block name="header"}{/block}
+{block name="css"}
+{JS href="__JS__/wow.min.js"}
+
+<style>
+    .guide-box {
+        position: relative;
+        background-repeat: no-repeat;
+        background-image: url();
+        background-size: 160px;
+        background-position-x: 96%;
+        background-position-y: 3px;
+    }
+    .list-media:hover a.media-content {
+        -webkit-animation: tada 1s .2s ease both;
+        -moz-animation: tada 1s .2s ease both;
+    }
+
+</style>
+{css href="__CSS__/zblog.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row app-block">
+
+                <div class="col-md-9 app-content">
+                    <!--文章分类排序-->
+                    <div class="filter-sift" style="width:100%">
+                        <ul class="filter-tag" style="padding: 10px 5px 15px 0;">
+                            <li class="filter-l"><i class="fa fa-map-o"></i>分类</li>
+                            <li class="filter-r clearfix">
+                                <a id="cate-5" href="/article/types.html" class="">All</a>
+                                {volist id="ol" name="mulu"}
+                                <a id="cate-5" href="{:url('/article/types/type/'.$ol.id)}" class="">{$ol.type_name}</a>
+
+                                {/volist}
+
+                            </li>
+                        </ul>
+                        <form id="sort-list" class="filter-tag">
+                            <p class="filter-l"><i class="fa fa-filter"></i>排序</p>
+                            <p class="filter-r order">
+                                <a id="default" class="current" data-type="time">最新<i class="fa fa-angle-down" style="margin-left: 5px"></i></a>
+                                <a class="" data-type="view">浏览<i class="fa fa-angle-down" style="margin-left: 5px"></i></a>
+                                <a class="" data-type="comment">评论<i class="fa fa-angle-down" style="margin-left: 5px"></i></a>
+                            </p>
+                            <input type="hidden" name="order" value="newest">
+                            <input type="hidden" name="sort" value="0">
+                        </form>
+                    </div>
+
+                    <div class="home-main auto-main">
+                        <!--页面主体信息-->
+                        {volist id="vo" name="list"}
+
+                        <article class="post-list blockimg picsrcd auto-list" id="list{$i}">
+                            <div class="entry-container">
+                                <figure class="block-image feaimg">
+                                    <a class="block-fea" href="/article/detail/id/{$vo.id}" title="{$vo.title}" target="_blank">
+                                        {if condition="$vo.img neq ''"}
+                                        <img class="lazy" src="{$vo.img}" alt="{$vo.title}" title="{$vo.title}" original="{$vo.img}" style="display: block;">
+                                        {else/}
+                                        <img class="lazy" src="__images__/articlenull.png" alt="{$vo.title}" title="{$vo.title}" original="__images__/articlenull.jpeg" style="display: block;">
+                                        {/if}
+                                    </a>
+                                    <span class="item-img-cate">{$vo.type_name}</span>
+                                </figure>
+                                <header class="entry-header">
+                                    <h3><a href="/article/detail/id/{$vo.id}" target="_blank">
+                                        {if condition="$vo.top eq 0"}
+                                        <span class="badge arc_v5">置顶</span>
+                                        {elseif condition="$vo.top eq 1" /}
+                                        <span class="badge arc_v6">推荐</span>
+                                        {/if}
+                                        {$vo.title}</a></h3>
+                                </header>
+                                <div class="entry-summary ss"><p>{$vo.content|strip_tags}</p></div>
+                                <div class="entry-meta-items">
+                                    <div class="entry-meta fea-meta">
+                                        <time title="{$vo.create_time|date='Y-m-d'}" datetime="{$vo.create_time|date='Y-m-d'}"><i class="fa fa-clock-o"></i>{$vo.create_time|date='Y-m-d'}</time>
+                                        <span class="meta-viewnums" title="{$vo.browsing} 阅读"><span class="separator"></span><i class="fa fa-eye"></i>{$vo.browsing} 阅读</span>
+                                        <a class="meta-viewnums" href="/article/detail/id/{$vo.id}#comments"><span class="separator"></span><i class="fa fa-comment-o"></i>{$vo.comment_count} 评论</a>			</div>
+                                    <div class="entry-meta-author"><a class="meta-author-url" href="/article/detail/id/{$vo.id}"><i class="fa fa-user-circle-o"></i>{$vo.uid.username}</a></div>
+                                </div>
+                                <div class="l-line"></div>
+                            </div>
+                            {if condition="$vo.top eq 0"}
+                            <div class="posttop"></div>
+                            {/if}
+                        </article>
+                        {/volist}
+                    </div>
+
+
+
+                    {$list|Raw}
+
+
+                </div>
+
+
+                <!--右边布局-->
+                <div class="col-md-3 app-sidebar">
+
+
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="search-warp clearfix">
+                            <form name="search" action="/article/searchlist" method="get">
+                                <input class="search-input" placeholder="请输入关键字" type="text" name="key">
+                                <button class="showhide-search" type="submit">搜索</button>
+                                <span class="s-icon"></span>
+                            </form>
+                            </div>
+                            <!--<a href="/writeup/contribute.html" target="_blank" class="btn btn-primary btn-rounded btn-block"><i class="ti-pencil mr-1"></i>投稿赚积分</a>-->
+                        </div>
+                    </div>
+
+
+                    <!--最新发表-->
+                    <section class="widget mt-4" id="divPrevious">
+                        <h3 class="widget-title">最近发表</h3>
+                        <ul class="widget-box divPrevious">
+                            {volist id="new" name="newslist"}
+                            <div class="side_new">
+                            <div class="side_new_dot"></div>
+                            <div class="side_new_inner">
+                                <div class="side-new-title"><a href="{:url('/article/detail/id/'.$new.id)}" title="{$new.title}" target="_blank">{$new.title}</a></div>
+                                <div class="side-new-time"><em>{$new.type_name}</em><span class="spot"></span>{$new.create_time|date="Y"}月{$new.create_time|date="m"}月{$new.create_time|date="d"}日</div>
+                            </div>
+                        </div>
+                            {/volist}
+                        </ul>
+                    </section>
+
+                    <!--热门文章-->
+                    <section class="widget wow fadeInDown mt-4" id="side_hot" style="visibility: visible; animation-name: none;">
+                        <h3 class="widget-title">热门文章</h3>
+                        <div class="widget-box side_hot">
+                            {volist id="top" name="articletop"}
+                            <div class="list-media">
+                                {if condition="$top.img neq ''"}
+                                <a class="media-content" href="/article/detail/id/{$top.id}" style="background-image:url({$top.img})">
+                                    {else/}
+                                    <a class="media-content" href="/article/detail/id/{$top.id}" style="background-image:url(__images__/null.jpeg)">
+                                    {/if}
+                                    <span class="list-overlay"></span>
+                                </a>
+                                <div class="list-content">
+                                    <a href="/article/detail/id/{$top.id}" class="list-title h-2x">{$top.title}</a>
+                                    <p class="list-footer"><span class="text-read">{$top.browsing} 阅读 ，</span><time class="d-inline-block">{$top.create_time|date='m-d'}</time></p>
+                                </div>
+                            </div>
+                            {/volist}
+
+                    </section>
+
+                    <!--热评文章-->
+                    <section class="widget wow fadeInDown" id="side_con" style="visibility: visible; animation-name: none;">
+                        <h3 class="widget-title">热评文章</h3>
+                        <ul class="widget-box side_con">
+                        {volist id="rep" name="articlerep"}
+                            <li>
+                                <a href="https://www.talklee.com/blog/671.html" title="{$rep.title}" target="_blank">
+                                <div class="hotcom-img">
+                                    {if condition="$rep.img neq ''"}
+                                    <img src="{$rep.img}" alt="{$rep.title}">
+                                    {else}
+                                    <img src="__images__/hotnull.jpeg" alt="{$rep.title}">
+                                    {/if}
+                                </div>
+                                    <div class="hotcom-left">
+                                        <h4 class="hot-com-title"><span class="num{$i}">{$i}</span>{$rep.title}</h4>
+
+                                        <div class="hot-com-clock">评论：{$rep.comment_count}</div>
+                                    </div>
+                                </a>
+                            </li>
+                            {/volist}
+
+                        </ul>
+
+                    </section>
+
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+</div>
+
+
+{/block}
+
+
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/jquery.isotope.min.js"}
+{JS href="__JS__/wangEditor.min.js"}
+{JS href="__JS__/highlight.min.js"}
+
+
+<script>
+    $('.clearfix').find('a').each(function () {
+
+        if (this.href == document.location.href || document.location.href.search(this.href) >= 0) {
+            $(this).addClass('current'); // this.className = 'active';
+        }
+    });
+    $('.order').find('a').each(function () {
+        var Oa=$(this);
+        var order=Oa.attr('data-type');
+        console.log(order);
+        if (document.location.href.search(order) >= 0) {
+            $('#default').removeClass('current');
+            $(this).addClass('current'); // this.className = 'active';
+        }
+    });
+
+
+
+    $(".order>a").on('click',function(event){
+        var Oa=$(this);
+        //Oa.addClass('current')
+        var order=Oa.attr('data-type');//获取排序条件
+        var url = $('.clearfix').find('.current').attr('href');
+        console.log(order);
+        location.href=url+'?order='+order;
+        /*$.ajax({
+            url: document.location.href,
+            method: "get",
+            data: {order: order},
+            success(res) {
+                    console.log(res.data)
+                }
+            });*/
+
+    })
+</script>
+
+
+{/block}

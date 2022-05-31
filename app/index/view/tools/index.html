@@ -1,0 +1,609 @@
+{extend name="public/base"}
+
+{block name="title"}在线工具{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <!--content top-->
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="nav nav-pills gallery-filter mb-3">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" data-filter="*">ALL</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-filter=".tool-编码">编码</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-filter=".tool-解密">解密</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-filter=".tool-JS">JS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-filter=".tool-Base家族">Base家族</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-filter=".tool-古典">古典</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-filter=".tool-3DES">3DES</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-filter=".tool-凯撒">凯撒</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-filter=".tool-栅栏">栅栏</a>
+                        </li>
+                    </ul>
+                    <div class="row challenge-hover gallery-container" style="position: relative; height: 1327.2px;">
+                        <div class="col-sm-3 tool-解密 " style="position: absolute; left: 0px; top: 0px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/fe40db731c88b20e31067c7746e00776.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">与佛论禅</p>
+                                            <p class="m-0 small text-muted">[解密]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="与佛论禅加密解密">
+                                        与佛论禅加密解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/todousharp" class="btn btn-outline-primary btn-sm ml-auto">开发中</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-古典 " style="position: absolute; left: 307.5px; top: 0px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/b3b528f13609c20a0ebd20558b724a89.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">UUencode</p>
+                                            <p class="m-0 small text-muted">[古典]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="在线UUencode加密/解密">
+                                        在线UUencode加密/解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="{:url('/tools/uuencode')}" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-古典 " style="position: absolute; left: 615px; top: 0px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/cf83ea0908902dbc9ff5613b102262a5.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">XXencode密码</p>
+                                            <p class="m-0 small text-muted">[古典]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="XXencode加密解密">
+                                        XXencode加密解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/xxencode" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-古典 " style="position: absolute; left: 922.5px; top: 0px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/c6a0693ac832f47c7abf05c84c9acaad.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">维吉尼亚密码</p>
+                                            <p class="m-0 small text-muted">[古典]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title=" 维吉尼亚加密/解密">
+                                        维吉尼亚加密/解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/vigenere" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-古典 " style="position: absolute; left: 0px; top: 221.2px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/1358ec3cdee176ff1d79cd34914242b9.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">希尔密码</p>
+                                            <p class="m-0 small text-muted">[古典]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="希尔加密解密">
+                                        希尔加密解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/hill" class="btn btn-outline-primary btn-sm ml-auto">待开发</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-古典 tool-栅栏 " style="position: absolute; left: 307.5px; top: 221.2px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/30da203d1b1d33e5f9f8a1a8133350e3.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">栅栏密码</p>
+                                            <p class="m-0 small text-muted">[古典][栅栏]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="线栅栏(RailFence)加密/解密">
+                                        线栅栏(RailFence)加密/解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/railfence" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-凯撒 tool-古典 " style="position: absolute; left: 615px; top: 221.2px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/372c6ab81a7bc944880d9900bbec817d.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">凯撒密码</p>
+                                            <p class="m-0 small text-muted">[凯撒][古典]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="凯撒(Caesar)加密/解密">
+                                        凯撒(Caesar)加密/解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/caesar" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-3DES tool-CryptoJS tool-TripleDes " style="position: absolute; left: 922.5px; top: 221.2px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/e608d11879bfd66e7403445c45b30266.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">TripleDes(3DES)</p>
+                                            <p class="m-0 small text-muted">[3DES][CryptoJS]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="TripleDes(3DES)加密解密-采用CryptoJS">
+                                        TripleDes(3DES)加密解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+
+                                        <a  href="/tools/tripledes" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 0px; top: 442.4px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/018573cca0e9da668f2b0ea79c8caed6.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base100编码解码</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base100编码解码">
+                                        Base100编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base100" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-古典 " style="position: absolute; left: 307.5px; top: 442.4px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/38b0f92ef6aa6b43d0d7d9491821f625.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">ADFGX密码</p>
+                                            <p class="m-0 small text-muted">[古典]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="ADFGX加密解密">
+                                        ADFGX加密解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/adfgx" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 615px; top: 442.4px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/7a3370214a6bb21ec5562469d4b78ca1.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base92编码解码</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base92在线编码解码">
+                                        Base92在线编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base92" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 922.5px; top: 442.4px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/7033e12b15542a734cd7fdbf1bebe819.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base91编码解码</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base91在线编码解码">
+                                        Base91在线编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base91" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 0px; top: 663.6px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/c570b6316e02217f993261d43fab1ad6.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base85编码解码</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base85编码解码">
+                                        Base85编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base85" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 307.5px; top: 663.6px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/edb7edd135d3d46f709930a95445161e.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base64编码解码</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base64在线编码解码">
+                                        Base64在线编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base64" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 615px; top: 663.6px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/508399dcbd1f2d05e153999ddf7920c5.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base62编码解码</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base62在线编码解码">
+                                        Base62在线编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base62" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 922.5px; top: 663.6px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/0a4a2aa4a246b3e9dd68510d7c5b3358.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base58编码解码</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base58在线编码解码">
+                                        Base58在线编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base58" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 0px; top: 884.8px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/ec1c30344705c1c7ceb608e7af9b8c28.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base32编码解码</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base32在线编码解码">
+                                        Base32在线编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base32" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 tool-Base家族 " style="position: absolute; left: 307.5px; top: 884.8px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/c22eba5d9de8809c367c5c23cf89cd40.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Base16</p>
+                                            <p class="m-0 small text-muted">[编码][Base家族]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Base16在线编码解码">
+                                        Base16在线编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/base16" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-编码 " style="position: absolute; left: 615px; top: 884.8px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/dbe3b4f72ec596aa6bed0fa6f115b850.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">核心价值观编码</p>
+                                            <p class="m-0 small text-muted">[编码]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="核心价值观编码解码">
+                                        核心价值观编码解码                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/cvecode" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-解密 tool-JS " style="position: absolute; left: 922.5px; top: 884.8px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/5f0619344530fc72bd62908883b914a3.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Brainfuck/OoK</p>
+                                            <p class="m-0 small text-muted">[解密][JS]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Brainfuck/OoK在线加密解密">
+                                        Brainfuck/OoK在线加密解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+                                        <small class="text-muted"></small>
+                                        <a  href="/tools/brainfuck" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-解密 tool-JS " style="position: absolute; left: 0px; top: 1106px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/0081fc2bdfb63eb037a6167fc94c5f25.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Sojson.v5解密</p>
+                                            <p class="m-0 small text-muted">[解密][JS]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Sojson.v5（jsjiami.com.v5 ）解密">
+                                        Sojson.v5（jsjiami.com.v5 ）解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+
+                                        <a  href="/tools/sojson5" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 tool-解密 tool-JS " style="position: absolute; left: 307.5px; top: 1106px;">
+                            <div class="card">
+                                <div class="card-body p-b-15">
+                                    <div class="d-flex">
+                                        <div class="pr-3">
+                                            <div class="avatar">
+                                                <img src="__images__/tools/0081fc2bdfb63eb037a6167fc94c5f25.png">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p class="mb-0 ">Sojson.v4 解密</p>
+                                            <p class="m-0 small text-muted">[解密][JS]</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div title="" data-toggle="tooltip" data-placement="top" class="font-size-13 text-muted m-b-10 aman-text-overflow-2" style="height: 2.2rem" data-original-title="Sojson.v4 解密">
+                                        Sojson.v4 解密                            </div>
+                                    <footer class="d-flex" style="align-items:flex-end;">
+
+                                        <a  href="/tools/sojson4" class="btn btn-outline-primary btn-sm ml-auto">进入</a>
+                                    </footer>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <!--content end-->
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/jquery.isotope.min.js"}
+<script>
+
+    $(function () {
+        var a = $(".gallery-container");
+        a.isotope({filter: "*", animationOptions: {duration: 750, easing: "linear", queue: false}});
+        $(".gallery-filter a").click(function () {
+            var b = $(this);
+            $(".gallery-filter .active").removeClass("active");
+            b.addClass("active");
+            var c = b.attr("data-filter");
+            a.isotope({filter: c, animationOptions: {duration: 300, easing: "linear", queue: false}});
+            return false
+        })
+
+    });
+</script>
+{/block}

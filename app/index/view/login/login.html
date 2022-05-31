@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$name.value}-用户登入</title>
+    <!--引入Bootstrap CSS-->
+    {css href="__CSS__/bootstrap.min.css"}
+    {css href="__CSS__/login.css"}
+    {css href="__CSS__/app.css"}
+
+
+    <!--移动设备适配优先-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+
+</head>
+<body class="text-center">
+    <div class="form-wrapper" style="position: relative;overflow: hidden;">
+    <form class="form-signin">
+        <img class="mb-4" src="{$logo_icon.value}" alt="" width="72" height="72">
+
+
+        <label for="username" class="sr-only">用户名</label>
+        <input type="text" id="username" name="username" class="form-control" placeholder="用户名" required="" autofocus="" oninput="check()">
+        <div class="col-12 text-right"><span id="un" class="text-danger" hidden></span></div>
+        <label for="password" class="sr-only">用户密码</label>
+        <input type="password" id="password" name="password" class="form-control" placeholder="请输入密码" required="" oninput="check()">
+        <div class="col-12 text-right"><span id="mm" class="text-danger" hidden></span></div>
+
+        <div class="form-group row">
+            <div class="col-6 pr-0">
+                <input type="text" id="code" name="code" class="form-control" placeholder="请输入验证码">
+            </div>
+            <div class="col-2 col-form-label text-right " style="position:relative;top:-5px;margin-left: -10px"><img id="captcha" src="{:captcha_src()}" alt="captcha" onclick="this.src='/captcha.html?'+Math.random();" /></div>
+        </div>
+        <div class="form-group d-flex justify-content-between">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" value="1" name="autologin" class="custom-control-input" checked="" id="autoLogin">
+                <label class="custom-control-label" for="autoLogin">记住密码</label>
+            </div>
+            <span>
+                <a href="/">回首页</a>
+                <span>|</span>
+                <a href="{:url('/users/reset')}">忘记密码？</a>
+            </span>
+        </div>
+        <!--<input type="hidden" value="{:token()}" name="__token__">-->
+        <a class="btn btn-lg btn-primary btn-block" onclick="sigin()">快速登录</a>
+        <hr>
+        <div class="col-12 pt-2">
+            <a class="text-muted" href="{:url('/register')}">还没有账号？立即注册</a>
+
+        </div>
+        <!--<p class="mt-5 mb-3 text-muted">© 2019-2022</p>-->
+    </form>
+    </div>
+
+</body>
+<!--引入JS文件-->
+{JS href="__JS__/jquery-3.3.1.min.js"}
+{JS href="__JS__/bootstrap.bundle.min.js"}
+{JS href="__JS__/login.js"}
+{js href="__JS__/sweetalert.min.js"}
+<script type="text/javascript">
+
+
+
+
+</script>
+</html>

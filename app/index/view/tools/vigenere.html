@@ -1,0 +1,213 @@
+{extend name="public/base"}
+
+{block name="title"}XXencode编码解码{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-9 m-auto">
+                    <div class=" page-header justify-content-between">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/">首页</a></li>
+                                <li class="breadcrumb-item"><a href="/tools">工具箱</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">维吉尼亚加密/解密</li>
+                            </ol>
+                        </nav>
+                        <a href="/tools" class="btn btn-outline-primary btn-rounded">
+                            <i class="ti-angle-left mr-2"></i> 返回
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form action="">
+                                <div class="form-group">
+                                    <textarea name="code" placeholder="请输入需要加密/解密的内容" id="code" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+                                <div class="form-row form-group">
+                                    <div class="col-md-4">
+                                        <input type="text" id="key" placeholder="秘钥" class="form-control">
+                                    </div>
+                                    <button id="encode" type="button" class="btn btn-primary m-l-r-15">加密</button>
+                                    <button id="decode" type="button" class="btn btn-outline-primary">解密</button>
+                                </div>
+                                <div class="form-group">
+                                    <textarea placeholder="加密/解密的结果" id="res" style="height: 200px;" class="form-control"></textarea>
+                                </div>
+
+                            </form>
+                            <style>
+                                table{
+                                    -webkit-touch-callout: none; /* iOS Safari */
+                                    -webkit-user-select: none; /* Chrome/Safari/Opera */
+                                    -khtml-user-select: none; /* Konqueror */
+                                    -moz-user-select: none; /* Firefox */
+                                    -ms-user-select: none; /* Internet Explorer/Edge */
+                                    user-select: none;
+                                    text-align: center;
+                                }
+                                table td {
+                                    height: 24px;
+                                    width: 24px;
+                                    cursor: pointer;
+                                }
+                                table td.active{
+                                    background: rgba(255,0,0,0.5);
+                                    color: #fff;
+                                }
+                                table td.active2{
+                                    background: rgba(255,0,0,0.8);
+                                    color: #fff;
+                                }
+                            </style>
+                            <table id="t">
+                                <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th><th>H</th><th>I</th><th>J</th><th>K</th><th>L</th><th>M</th><th>N</th><th>O</th><th>P</th><th>Q</th><th>R</th><th>S</th><th>T</th><th>U</th><th>V</th><th>W</th><th>X</th><th>Y</th><th>Z</th></tr></thead>
+                                <tbody><tr><td style="font-weight: bold">A</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td></tr><tr><td style="font-weight: bold">B</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td></tr><tr><td style="font-weight: bold">C</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td></tr><tr><td style="font-weight: bold">D</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td></tr><tr><td style="font-weight: bold">E</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td></tr><tr><td style="font-weight: bold">F</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td></tr><tr><td style="font-weight: bold">G</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td></tr><tr><td style="font-weight: bold">H</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td></tr><tr><td style="font-weight: bold">I</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td></tr><tr><td style="font-weight: bold">J</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td></tr><tr><td style="font-weight: bold">K</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td></tr><tr><td style="font-weight: bold">L</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td></tr><tr><td style="font-weight: bold">M</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td></tr><tr><td style="font-weight: bold">N</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td></tr><tr><td style="font-weight: bold">O</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td></tr><tr><td style="font-weight: bold">P</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td></tr><tr><td style="font-weight: bold">Q</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td></tr><tr><td style="font-weight: bold">R</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td></tr><tr><td style="font-weight: bold">S</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td></tr><tr><td style="font-weight: bold">T</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td></tr><tr><td style="font-weight: bold">U</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td></tr><tr><td style="font-weight: bold">V</td><td>V</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td></tr><tr><td style="font-weight: bold">W</td><td>W</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td></tr><tr><td style="font-weight: bold">X</td><td>X</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td></tr><tr><td style="font-weight: bold">Y</td><td>Y</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td></tr><tr><td style="font-weight: bold">Z</td><td>Z</td><td>A</td><td>B</td><td>C</td><td>D</td><td>E</td><td>F</td><td>G</td><td>H</td><td>I</td><td>J</td><td>K</td><td>L</td><td>M</td><td>N</td><td>O</td><td>P</td><td>Q</td><td>R</td><td>S</td><td>T</td><td>U</td><td>V</td><td>W</td><td>X</td><td>Y</td></tr></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+
+<script>
+    var lastX=0,lastY=0;
+    init();
+    function init(){
+        let table=$("#t");
+        //head
+        let head="<th></th>";
+        for(let i=0;i<26;i++){
+            head+="<th>"+String.fromCharCode(65+i)+"</th>";
+        }
+        let body="";
+        for(let i=0;i<26;i++){
+            body+="<tr><td style='font-weight: bold'>"+String.fromCharCode(65+i)+"</td>";
+            for(let j=0;j<26;j++){
+                body+="<td>"+String.fromCharCode(65+((j+i)%26))+"</td>"
+            }
+            body+="</tr>";
+        }
+        table.find("thead tr").html(head);
+        table.find("tbody").html(body);
+    }
+    $("#t td").hover(function (){
+        let x=$(this).index(),y=$(this).parent().parent().find("tr").index($(this).parent()[0])+1;
+        if(x==lastX && y==lastY){
+            return ;
+        }
+        $("#t td").removeClass("active active2");
+        let list= $("#t tr").eq(y).find("td");
+        for(let i=0;i<x;i++){
+            list.eq(i).addClass('active');
+        }
+        for(let i=0;i<y;i++){
+            list= $("#t tr").eq(i).find("td").eq(x).addClass('active');
+        }
+        $(this).addClass('active2')
+    })
+    $("#encode").click(function () {
+        let content = $('#code').val();
+        let key = $('#key').val();
+        if (content == "") {
+            toastr.warning("请输入要加密的内容");
+            return "";
+        }
+        if (key== "") {
+            toastr.warning("请输入秘钥");
+            return "";
+        }
+        $("#res").val(encrypt(content,key));
+    });
+    $("#decode").click(function () {
+        let content = $('#code').val();
+        let key = $('#key').val();
+        if (content == "") {
+            toastr.warning("请输入要解密的内容");
+            return "";
+        }
+        if (key== "") {
+            toastr.warning("请输入秘钥");
+        }
+        $("#res").val(decrypt(content,key));
+    });
+    function encrypt(plain,key) {
+        var ctext = "";
+        var kpos = 0;
+        for( var i = 0; i < plain.length; i ++ ) {
+            var kcode = key.charCodeAt( kpos % key.length );
+            var pcode = plain.charCodeAt( i );
+            var ccode = pcode;
+            if ( pcode >= 65 && pcode <= 90 ) {
+                if (kcode >= 65 && kcode <= 90 ) {
+                    ccode = ( ( kcode - 65 ) + ( pcode - 65 ) ) % 26 + 65;
+                }
+                if (kcode >= 97 && kcode <= 122 ) {
+                    ccode = ( ( kcode - 97 ) + ( pcode - 65 ) ) % 26 + 65;
+                }
+                kpos ++;
+            }
+            if ( pcode >= 97 && pcode <= 122 ) {
+                if (kcode >= 65 && kcode <= 90 ) {
+                    ccode = ( ( kcode - 65 ) + ( pcode - 97 ) ) % 26 + 97;
+                }
+                if (kcode >= 97 && kcode <= 122 ) {
+                    ccode = ( ( kcode - 97 ) + ( pcode - 97 ) ) % 26 + 97;
+                }
+                kpos ++;
+            }
+            ctext += String.fromCharCode(ccode);
+        }
+
+        return ctext;
+    }
+
+    function decrypt(ctext,key) {
+        var plain = "";
+        var kpos = 0;
+        for( var i = 0; i < ctext.length; i ++ ) {
+            var kcode = key.charCodeAt( kpos % key.length );
+            var ccode = ctext.charCodeAt( i );
+            var pcode = ccode;
+            if ( ccode >= 65 && ccode <= 90 ) {
+                if (kcode >= 65 && kcode <= 90) {
+                    pcode = ( ( ccode - 65 ) - ( kcode - 65 ) + 26 ) % 26 + 65;
+                }
+                if (kcode >= 97 && kcode <= 122) {
+                    pcode = ( ( ccode - 65 ) - ( kcode - 97 ) + 26 ) % 26 + 65;
+                }
+                kpos ++;
+            }
+            if ( ccode >= 97 && ccode <= 122 ) {
+                if (kcode >= 65 && kcode <= 90) {
+                    pcode = ( ( ccode - 97 ) - ( kcode - 65 ) + 26 ) % 26 + 97;
+                }
+                if (kcode >= 97 && kcode <= 122) {
+                    pcode = ( ( ccode - 97 ) - ( kcode - 97 ) + 26 ) % 26 + 97;
+                }
+                kpos ++;
+            }
+            plain += String.fromCharCode(pcode);
+        }
+
+        return  plain;
+    }
+</script>
+{/block}

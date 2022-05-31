@@ -1,0 +1,52 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Uid')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-uid" class="form-control" name="row[uid]" type="number" value="{$row.uid}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Action_title')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-action_title" data-rule="required" class="form-control" name="row[action_title]" type="text" value="{$row.action_title}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Action_text')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-action_text" class="form-control " rows="5" name="row[action_text]" cols="50">{$row.action_text}</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Action_type')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-action_type" data-rule="required" class="form-control selectpicker" name="row[action_type]">
+                {foreach name="actionTypeList" item="vo"}
+                    <option value="{$key}" {in name="key" value="$row.action_type"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Action_count')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-action_count" data-rule="required" class="form-control" name="row[action_count]" type="number" value="{$row.action_count}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Action_time')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-action_time" data-rule="required" class="form-control datetimepicker" data-date-format="YYYY-MM-DD HH:mm:ss" data-use-current="true" name="row[action_time]" type="text" value="{$row.action_time}">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

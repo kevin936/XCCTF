@@ -1,0 +1,175 @@
+{extend name="public/base"}
+
+{block name="title"}商品详情{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <div class="slider-for slick-initialized slick-slider">
+                                        <div class="slick-list draggable"><div class="slick-track" style="opacity: 1; width: 483px;"><div class="slick-slide-item slick-slide slick-current slick-active" data-slick-index="0" aria-hidden="false" style="width: 463px; position: relative; left: 0px; top: 0px; z-index: 999; opacity: 1;" tabindex="0">
+                                            <a class="image-popup" href="{$info.img}" tabindex="0">
+                                                <img src="{$info.img}" class="aman-cover-img" alt="image">
+                                            </a>
+                                        </div></div></div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-7">
+                                    <h2>{$info.name}</h2>
+                                    <div class="font-weight-bold aman-goods-info m-t-20">
+                                        <dl>
+                                            <dt>价　　格：</dt>
+                                            <dd>
+                                                <span id="coin" class="font-size-30 text-danger" data-coin="40">{$info.score}</span>
+                                                <sup>
+                                                    <small class="font-size-11">积分</small>
+                                                </sup>
+                                            </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>服务承诺:</dt>
+                                            <dd>
+                                                {volist id="vo" name="tip"}
+                                                <span class="badge bg-success-bright text-success">
+                                            <i class="fa fa-check"></i> {$vo}
+                                                </span>
+                                                {/volist}
+
+
+                                            </dd>
+                                        </dl>
+                                    </div>
+                                    <hr>
+                                    <div class="aman-goods-info attr-list">
+                                        <dl class="attr" data-id="157">
+                                            <dt>选择规格：</dt>
+                                            <dd>
+                                                <span data-id="248" class="item">{$info.spe}</span>
+                                            </dd>
+                                        </dl>
+
+                                            {if  condition="$info.quota eq 0"}
+                                            <dl>
+                                                <dt>数　　量：</dt>
+                                                <input id="num" type="number" min="1" class="col-2">
+                                            </dl>
+                                            {else/}
+                                             <dl>
+                                                <dt>限　　购：</dt>
+                                                <input id="num" class="col-2" value="{$info.quota}" max="{$info.quota}" disabled =“disabled”>
+                                             </dl>
+                                            {/if}
+                                        <dl>
+                                            <dt>库　　存：</dt>
+                                            <dd id="skunum" data-num="956">{$info.stock}</dd>
+                                        </dl>
+                                        <button id="buy" class="btn btn-primary btn-square m-b-20" data-id="{$info.id}">立刻兑换</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <ul class="nav nav-pills mb-4" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="detail-tab" data-toggle="tab" href="#detail" role="tab" aria-controls="detail" aria-selected="true">商品详情</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="false">评论</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+                                    {$info.shp_content|raw}
+                                </div>
+                                <div class="tab-pane fade comments" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+                                    <!--评论-->
+                                    <div class="card-body">
+                                        <div class="d-flex m-b-10">
+                                            <div>
+                                                <figure class="avatar avatar-sm mr-3">
+                                                    <img src="session('img')" class="rounded-circle" alt="...">
+                                                </figure>
+                                            </div>
+                                            <form class="flex-grow-1 commentForm" novalidate="">
+                                                <div class="form-group">
+                                                    <textarea required="" name="content" rows="2" class="form-control " style="resize: none" placeholder="说点什么吧"></textarea>
+                                                </div>
+                                                <button type="button" class="btn btn-primary float-right commentSubmit">回复</button>
+                                            </form>
+                                        </div>
+                                        <div class="m-t-30"></div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+    <script>
+
+
+        $(".attr .item").click(function () {
+            let p=$(this).parents('.attr');
+            if( $(this).hasClass('active')){
+                $(this).removeClass('active')
+
+            }else{
+                p.find('.item').removeClass('active');
+                $(this).addClass('active')
+
+
+            }
+
+        });
+
+
+        $("#buy").click(function () {
+            let id = $("#buy").attr('data-id');
+                if ($('.attr .item').hasClass('active')) {
+                    location.href="/store/create/id/"+id+'?num='+$('#num').val();
+                } else {
+                    toastr.warning('请选择规格');
+                    return;
+                }
+
+
+
+        });
+        $(document).ready(function() {
+            if(location.hash) {
+                $('a[href=\'' + location.hash + '\']').tab('show');
+            }
+            $(document.body).on("click", "a[data-toggle]", function(event) {
+                location.hash = this.getAttribute("href");
+            });
+        });
+        $(window).on('popstate', function() {
+            var anchor = location.hash || $("a[data-toggle=tab]").first().attr("href");
+            $('a[href=\'' + anchor + '\']').tab('show');
+        });
+    </script>
+{/block}

@@ -1,0 +1,1 @@
+{"menus":["general\/databasebak","general\/databasebak\/index","general\/databasebak\/query","general\/databasebak\/backup","general\/databasebak\/restore"],"files":["app\\admin\\controller\\general\\Databasebak.php","app\\admin\\lang\\zh-cn\\general\\databasebak.php","app\\admin\\view\\general\\databasebak\\index.html","public\\assets\\js\\backend\\general\\databasebak.js"]}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$name.value}-用户注册</title>
+    <!--引入Bootstrap CSS-->
+    {css href="__CSS__/bootstrap.min.css"}
+    {css href="__CSS__/register.css"}
+    {css href="__CSS__/app.css"}
+
+    <!--移动设备适配优先-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+</head>
+<body>
+
+
+<div class="container">
+    <div class="form-wrapper" style="position: relative;overflow: hidden;">
+    <form class="form-signin" id="sign" novalidate="">
+        <div class="text-center">
+            <img src="{$logo_icon.value}" alt="" width="72" height="72">
+
+        </div>
+        <div class="form-row text-center">
+            <div class="form-row col-md-12 pb-3 pt-4">
+
+
+                    <input type="text" class="form-control col-11" id="username" name="username" placeholder="请输入用户名" required="">
+
+                <span class="col-1 text-danger text-right">*</span>
+                <div class="col-12 text-right"><span id="name" class="text-danger" hidden></span></div>
+            </div>
+            <div class="form-row col-md-12 pb-3">
+
+
+                    <input type="password" class="form-control col-11" id="password" name="password" placeholder="请输入密码" onfocus="checkname()" required="">
+
+                <span class="col-1 text-danger text-right">*</span>
+            </div>
+            <div class="form-row col-md-12 pb-3">
+
+
+                    <input type="password" class="form-control col-11" id="passwordnot" name="passwordnot" placeholder="请再次输入密码" oninput="check()" required="">
+
+                <span class="col-1 text-danger text-right">*</span>
+                <div class="col-12 text-right"><span id="warn" class="text-danger" hidden></span></div>
+            </div>
+
+            <div class="form-row col-md-12 pb-3" id="emailcls">
+                    <input type="text" class="form-control col-11" id="email" name="email" placeholder="请输入您的邮箱地址" required="">
+
+                <span class="col-1 text-danger text-right">*</span>
+                <div class="col-12 text-right"><span id="checkemail" class="text-danger" hidden></span></div>
+            </div>
+
+            <div class="form-row col-md-12 pb-3">
+                    <input type="text" class="col-11 form-control " id="phone" name="phone" oninput="value=value.replace(/[^\d]/g,'')" maxlength="11" placeholder="请输入您的联系电话" required="">
+
+                <span class="col-1 text-danger text-right">*</span>
+                <div class="col-12 text-right"><span id="checkphone" class="text-danger" hidden></span></div>
+            </div>
+
+            <div class="form-row col-md-12 pr-0">
+
+                    <input type="text" id="code" name="code" class="form-control col-6" placeholder="请输入验证码" required="">
+                <div class="col-5 col-form-label text-right " style="position:relative;top:-5px;margin-left: 2px"><img id="captcha" src="{:captcha_src()}" alt="captcha" onclick="this.src='/captcha.html?'+Math.random();" /></div>
+            </div>
+            <input id="tk" type="hidden" value="{:token()}" name="__token__">
+            <button id="reg" type="submit" class="btn btn-primary btn-block mt-4">立即注册</button>
+
+        </div>
+        </form>
+        <hr>
+        <div class="col-12 pt-2">
+           <p> <a class="text-muted" href="{:url('/login')}">已有账号，立即去登入！</a></p>
+
+            <a class="text-primary" href="{:url('/')}">返回首页</a>
+        </div>
+
+
+    </div>
+</div>
+{JS href="__JS__/jquery-3.5.1.min.js"}
+{JS href="__JS__/bootstrap.bundle.min.js"}
+{JS href="__JS__/echarts.min.js"}
+{js href="__JS__/toastr.min.js"}
+{js href="__JS__/sweetalert.min.js"}
+{JS href="__JS__/register.js"}
+
+<script>
+    //注册
+    $("#sign").submit(function (e) {
+        $("#reg").attr("disabled", "true");
+        let btn=$("#reg");
+        e.preventDefault();
+        e.stopPropagation();
+        let form=document.getElementById('sign');
+        if(form.checkValidity()){
+            let data=$("#sign").serialize();
+            $.ajax({
+                url: "/createname",
+                method: 'post',
+                data: data,
+                complete:function (xhr,data){
+                    var d = xhr.getResponseHeader("__token__")
+                    console.log(d);
+                    $("#tk").val(d);
+                },
+                success(res) {
+                    if(res.state === 2)
+                    {
+
+                        swal(res.msg, '', "warning").then(function () {
+                            $("#captcha").click()
+                        });
+                    }else if(res.state ===1) {
+                        swal(res.msg, '', "success").then(function () {
+                            window.location.href='/login'
+                        });
+                    }else{
+                        if(res.msg['email']){
+                            document.getElementById("checkemail").innerHTML = res.msg['email'];
+                            $("#checkemail").removeAttr("hidden");
+                            //token刷新
+                        }else {
+                            $("#warn").prop("hidden",true);
+                        }
+                        if(res.msg['phone'])
+                        {
+                            document.getElementById("checkphone").innerHTML = res.msg['phone'];
+                            $("#checkphone").removeAttr("hidden");
+                            //token刷新
+                        }else{
+                            $("#checkphone").prop("hidden",true);
+                        }
+                        if(res.msg['__token__'])
+                        {
+                            swal(res.msg['__token__'], '', "error").then(function () {
+                                //location.reload();
+                            });
+                        }
+
+                    }
+                }
+            });
+            btn.removeAttr("disabled");
+        }else{
+            $("#sign").addClass("was-validated");
+            $("#reg").removeAttr("disabled");
+        }
+    })
+</script>
+</body>
+<!--引入JS文件-->
+
+
+
+</html>

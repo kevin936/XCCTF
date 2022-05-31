@@ -1,0 +1,228 @@
+{extend name="public/base"}
+
+{block name="title"}个人信息{/block}
+{block name="header"}{/block}
+{block name="css"}
+{css href="__CSS__/aman.css"}
+{/block}
+
+{block name="main"}
+<div class="content-wrapper">
+    <div class="aman-warp">
+
+        <div class="content">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row app-block">
+                        <div class="col-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="nav flex-lg-column flex-sm-row nav-pills" role="tablist" aria-orientation="vertical">
+                                        <a class="nav-link m-b-10 active" href="#">
+                                            个人信息
+                                        </a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/message')}">消息中心</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/myteam')}">我的战队</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/order')}">我的订单</a>
+                                        <a class="nav-link m-b-10" href="{:url('//users/setinfo')}">信息设置</a>
+                                        <a class="nav-link m-b-10" href="{:url('/users/setpass')}">修改密码</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-9">
+                            {volist id='vo' name='list'}
+                            <div class="card">
+                                <div id="bannerimg" class="card-img-top aman-user-bg">
+                                    <img id="userBg" src="__images__/user-banner.jpg">
+                                    <!--<div class="aman-user-bg-hover">
+                                        <i class="fa fa-camera"></i>
+                                    </div>
+                                    <input type="file" id="uploadBg">-->
+
+                                </div>
+
+                                <div class="card-body  m-t-70-minus" id="infotop">
+
+                                        <div class="mb-3 text-center">
+
+
+
+                                                <figure class="avatar avatar-xl m-b-10 position-relative">
+                                                    {if condition="$vo.frame_img neq ''"}
+                                                    <img src="{$vo.frame_img}" class="aman-avatar-border" style="left:-8%;top:-5%;width:115%!important;height:104%!important">
+                                                    {/if}
+                                                    <img class="rounded-circle" src="{$vo.img}">
+                                                    <!--<img src="{$vo.img}" class="aman-avatar-img">-->
+                                                </figure>
+
+
+                                            <h5 class="m-t-5">{$vo.username}</h5>
+                                        </div>
+                                        <div class="row">
+                                            <div class="card-body">
+                                                <div class="row text-center">
+                                                    <div class="col-4 text-info">
+                                                        <h4 class="font-weight-bold">{$vo.score}</h4>
+                                                        <span>积分</span>
+                                                    </div>
+                                                    <div class="col-4 text-success">
+                                                        <h4 class="font-weight-bold">3127</h4>
+                                                        <span>排名</span>
+                                                    </div>
+                                                    <div class="col-4 text-warning">
+                                                        <h4 class="font-weight-bold">null</h4>
+                                                        <span>金币</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <ul class="nav nav-pills flex-column flex-sm-row" id="myTab" role="tablist">
+                                        <li class="flex-sm-fill text-sm-center nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#info" role="tab" aria-selected="true">个人信息</a>
+                                        </li>
+                                        <li class="flex-sm-fill text-sm-center nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#posts" role="tab" aria-selected="false">
+                                                Ta的投稿
+                                                <span class="badge badge-light m-l-5">0</span>
+                                            </a>
+                                        </li>
+                                        <li class="flex-sm-fill text-sm-center nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#writeup" role="tab" aria-selected="false">
+                                                WriteUp
+                                                <span class="badge badge-light m-l-5">0</span>
+                                            </a>
+
+                                        </li>
+                                        <li class="flex-sm-fill text-sm-center nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#honour" role="tab" aria-selected="false">
+                                                个人荣誉
+                                                <span class="badge badge-light m-l-5">0</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-content" id="myTabContent">
+                                    <div class="tab-pane fade active show" id="info" role="tabpanel">
+                                        <div class="card-body row">
+                                            <div class="aman-goods-info col-8">
+                                                <dl>
+                                                    <dt>排　　名：</dt>
+                                                    <dd>3127</dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>积　　分：</dt>
+                                                    <dd>{$vo.score}</dd>
+                                                </dl>
+                                                <dl>
+                                                    <dt>所属战队：</dt>
+
+                                                    {if condition="$vo.team_id neq '' "}
+                                                    <dd>{$vo.team_id}</dd>
+                                                    {else/}
+                                                    <dd>暂无</dd>
+                                                    {/if}
+
+                                                </dl>
+                                                <dl>
+                                                    <dt>注册时间：</dt>
+                                                    <dd>{$vo.create_time}</dd>
+                                                </dl>
+                                            </div>
+                                            <div class="col-4">
+                                                <div id="container" style="height: 100%;width: 250px"></div>
+
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <h4 class="text-center m-t-30">解题记录</h4>
+                                                <div class="table-responsive">
+                                                    <table class="table table-lg">
+                                                        <thead>
+                                                        <tr>
+                                                            <th>ID</th>
+                                                            <th>题目名称</th>
+                                                            <th class="text-center">类型</th>
+                                                            <th class="text-center">积分</th>
+                                                            <th>解题时间</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {volist id="vo" name="answerlist"}
+                                                        <tr>
+                                                            <td>{$i}</td>
+                                                            <td>
+                                                                <a class="link-1" href="#">{$vo.tid}</a>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <span class="badge bg-primary-bright text-primary">{$vo.type}</span>
+                                                            </td>
+                                                            <td class="text-center">{$vo.score}</td>
+
+                                                            <td>{$vo.create_time}</td>
+                                                        </tr>
+                                                        {/volist}
+                                                        </tbody>
+                                                    </table>
+                                                    {$answerlist | raw}
+                                                </div>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="posts" role="tabpanel">
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <div class="text-center p-t-b-30">
+                                                    <img style="height: 120px;" src="/static/images/goods-cover.png" alt="">
+                                                    <p class="text-muted">暂无数据</p>
+                                                </div>                                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="writeup" role="tabpanel">
+                                        <div class="card-body">
+                                            <ul class="list-group list-group-flush">
+                                                <div class="text-center p-t-b-30">
+                                                    <img style="height: 120px;" src="/static/images/goods-cover.png" alt="">
+                                                    <p class="text-muted">暂无数据</p>
+                                                </div>                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="honour" role="tabpanel">
+
+                                        <div class="text-center p-t-b-30">
+                                            <img style="height: 120px;" src="/static/images/goods-cover.png" alt="">
+                                            <p class="text-muted">暂无数据</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/volist}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+{/block}
+
+{block name="footer"}{/block}
+
+{block name="js"}
+{JS href="__JS__/echarts.min.js"}
+{JS href="__JS__/info.js"}
+{/block}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Z_CTF-用户注册</title>
+    <!--引入Bootstrap CSS-->
+    {css href="__CSS__/bootstrap.min.css"}
+    {css href="__CSS__/register.css"}
+    {css href="__CSS__/app.css"}
+
+    <!--移动设备适配优先-->
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+
+</head>
+<body>
+
+
+<div class="container">
+    <div class="form-wrapper" style="position: relative;overflow: hidden;">
+    <form class="form-signin">
+        <div class="text-center">
+            <img class="" src="__images__/logo.png" alt="" width="72" height="72">
+
+        </div>
+        <div class="form-row text-center">
+            <div class="form-row col-md-12 pb-3 pt-4">
+
+
+                    <input type="text" class="form-control col-11" id="username" name="username" placeholder="请输入邮箱号">
+
+                <span class="col-1 text-danger text-right">*</span>
+                <div class="col-12 text-right"><span id="name" class="text-danger" hidden></span></div>
+            </div>
+
+            <div class="form-row col-md-12 pr-0">
+
+                    <input type="text" id="code" name="code" class="form-control col-6" placeholder="请输入验证码">
+                <div class="col-5 col-form-label text-right " style="position:relative;top:-5px;margin-left: 2px"><img id="captcha" src="{:captcha_src()}" alt="captcha" onclick="this.src='/captcha.html?'+Math.random();" /></div>
+            </div>
+            <a class="btn btn-primary btn-block mt-4" onclick="sigup()">找回密码</a>
+        </div>
+
+
+    </form>
+    </div>
+</div>
+
+</body>
+<!--引入JS文件-->
+{JS href="__JS__/jquery-3.3.1.min.js"}
+{JS href="__JS__/bootstrap.bundle.min.js"}
+
+<script type="text/javascript">
+    function checkname(){
+
+        var username = $("#username").val();
+        $.ajax({
+            url: "{:url('users/checkusername')}",
+            method: "GET",
+            data: {"username":username},
+            success(res) {
+                if(res){
+                    document.getElementById("name").innerHTML = res.msg;
+                    $("#name").removeAttr("hidden");
+                }else{
+                    $("#name").prop("hidden",true);
+                }
+            }
+
+        })
+    }
+    function check(){
+        var password = $("#password").val();
+        var passwordnot = $("#passwordnot").val();
+
+        if(passwordnot === password){
+            $("#warn").prop("hidden",true);
+        }else{
+            document.getElementById("warn").innerHTML = "输入的两次密码不一致~";
+            $("#warn").removeAttr("hidden");
+        }
+
+    }
+    function sigup(){
+        this.src="/captcha.html?"+Math.random();
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var passwordnot = $("#passwordnot").val();
+        var email   = $("#email").val();
+        var phone   = $("#phone").val();
+        var code    = $("#code").val();
+
+        if(username === "" || password === "" || passwordnot === "" || email === "" || phone === "" || code === ""){
+            if(username === "" || password === "" || passwordnot === "" || email === "" || phone === ""){
+                alert("亲，您还有必填信息未填哦！");
+            }else if(code === "")
+            {
+                alert("请输入验证码！");
+            }
+        }else if(username != "" && password != "" && passwordnot != "" && email != "" && phone != "" && code !=""){
+            $.ajax({
+                url: "{:url('/users/createname')}",
+                method: "POST",
+                data:{
+                    "username": username,
+                    "password": password,
+                    "email": email,
+                    "phone": phone,
+                    "code": code
+                },
+                success(res){
+                    if(res.msg === "验证码错误~")
+                    {
+
+                        $("#captcha").attr('src','{:captcha_src()}?'+Math.random());
+                        alert(res.msg);
+                    }else{
+                        alert(res.msg);
+                        window.location.reload();
+                    }
+                }
+            })
+        }
+
+
+    }
+
+</script>
+</html>
