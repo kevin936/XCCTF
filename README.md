@@ -34,4 +34,4 @@
 
 打赏五元以上的可加入开发交流群，入群申请请输入打赏流水订单号。管理审核后入群，设置入群门槛是为了防止某些白嫖党白嫖不满足，还要提各种要求。欢迎大家加入到开源开发团队一起完善，一起变得更好。
 
-<img src="http://img.lmzyw.cn/img/shoukuang.jpg" alt="shoukuang" style="zoom: 50%;" />
+<img src="http://img.lmzyw.cn/img/shoukuang.jpg" alt="shoukuang" style="zoom: 50%;height:500px" />
