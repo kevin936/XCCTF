@@ -26,6 +26,7 @@ use app\index\model\Challenge as ChallengeModel;
 use app\index\model\Action as ActionModel;
 use app\index\model\Teamusers as TeamusersModel;
 use app\index\model\Chatype as ChatypeModel;
+use function EasyWeChat\Kernel\Support\get_client_ip;
 
 class Users extends BaseController
 {
@@ -236,15 +237,17 @@ class Users extends BaseController
     public function info()
     {
         //$data = $request->param();
-        $data = UsersModel::where(['id'=>session('uid'),'username' => session('users')])->select();
+        //$data = UsersModel::where(['id'=>session('uid'),'username' => session('users')])->select();
         return view('info',[
             'list'  => UsersModel::where(['id'=>session('uid'),'username' => session('users')])->select(),
             'answerlist'  => AnswerModel::where('uid',session('uid'))->paginate([
                 'list_rows' => 10,
                 'query' => request()->param()
-            ])
+            ]),
+            'article' => Article::where('uid',session('uid'))->select(),
 
         ]);
+
     }
 
     public function userflag()
@@ -1045,6 +1048,17 @@ class Users extends BaseController
             ]);
 
         }
+
+    }
+
+    /**AWD列表**/
+    public function awdlist ()
+    {
+
+        return view('awdlist',[
+            'teamtop15' => Teams::order('awd_score','desc')->limit(15)->select(),
+
+        ]);
 
     }
 

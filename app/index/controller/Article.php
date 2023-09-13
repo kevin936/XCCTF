@@ -402,6 +402,26 @@ class Article extends BaseController
         ]);
     }
 
+    /**删除文章**/
+    public function delarticle(Request $request)
+    {
+        $data = $request->param();
+
+        $sul = ArticleModel::where('id',$data['id'])->find();
+
+        if($sul->getData('uid') == session('uid'))
+        {
+            ArticleModel::where('id',$data['id'])->delete();
+            $msg['code'] = 1;
+            $msg['msg'] = '删除成功!';
+            return json($msg);
+        }else{
+            $msg['code']=0;
+            $msg['msg']='调皮了嗷，怎么能删除别人的文章呢！';
+            return json($msg);
+        }
+    }
+
 
 
 }

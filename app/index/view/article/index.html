@@ -54,6 +54,7 @@
                                 <span class="text-muted mr-2"><i class="fa fa-clock-o"></i> {$article.create_time|date='Y-m-d'}</span>
                                 <span class="text-muted mr-2"><i class="fa fa-eye"></i> {$article.browsing}</span>
                                 <span class="text-muted mr-2"><i class="fa fa-comments-o"></i> {$article.comment_count}</span>
+                                <span class="badge badge-light  mr-2" style="background: #eaeaea;font-weight: 600;color:#838383;">IP：{$article.uid.ip}</span>
                                 {if condition="$article.uid.uid eq session('uid')"}
                                 <a href="/article/editcontribute/id/{$article.id}" class="text-primary float-right"><i class="fa fa-pencil-square-o"></i> 编辑</a>
                                 {/if}
@@ -115,6 +116,12 @@
                                     </div>
                                     <div class="media-body">
                                         <h5 class="mb-1">{$vo.username}                                                                       <small class="text-muted">{$vo.create_time}</small>
+                                            {if condition="$vo.ip_address neq ''"}
+                                            <span class="badge badge-light  mr-2" style="background: #eaeaea;font-weight: 600;color:#838383;">IP：{$vo.ip_address}</span>
+                                            {else/}
+                                            <span class="badge badge-light  mr-2" style="background: #eaeaea;font-weight: 600;color:#838383;">IP：未知</span>
+                                            {/if}
+
                                         </h5>
                                         <p>{$vo.content}</p>
                                         <div class="comment-tools mt-4">
@@ -159,6 +166,11 @@
                                                     <h5 class="font-size-16">
                                                         {$reply.from_id.username}
                                                         <small class="text-muted">{$reply.create_time}</small>
+                                                        {if condition="$reply.from_id.ip neq ''"}
+                                                        <span class="badge badge-light  mr-2" style="background: #eaeaea;font-weight: 600;color:#838383;">IP：{$reply.from_id.ip}</span>
+                                                        {else/}
+                                                        <span class="badge badge-light  mr-2" style="background: #eaeaea;font-weight: 600;color:#838383;">IP：未知</span>
+                                                        {/if}
                                                     </h5>
                                                     <p class="font-size-13"> {$reply.content}</p>
                                                     <div class="comment-tools ">

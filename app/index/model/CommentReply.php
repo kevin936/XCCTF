@@ -7,11 +7,12 @@ use think\model;
 class CommentReply extends Model
 {
 
+
     public function getFromidAttr($value)
     {
-        $data = Users::field('username,img,frame_img')->where('id',$value)->find();
+        $data = Users::field('username,img,frame_img,ip_address')->where('id',$value)->find();
 
-        return ["uid"=>$value,"username"=>$data['username'],"img"=>$data['img'],"frame_img"=>$data['frame_img']];
+        return ["uid"=>$value,"username"=>$data['username'],"img"=>$data['img'],"frame_img"=>$data['frame_img'],"ip"=>$data['ip_address']];
     }
 
     public function getCreatetimeAttr($value)

@@ -71,8 +71,8 @@
                                                         <span>排名</span>
                                                     </div>
                                                     <div class="col-4 text-warning">
-                                                        <h4 class="font-weight-bold">null</h4>
-                                                        <span>金币</span>
+                                                        <h4 class="font-weight-bold">{$vo.create_time}</h4>
+                                                        <span>注册时间</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -89,13 +89,18 @@
                                         </li>
                                         <li class="flex-sm-fill text-sm-center nav-item">
                                             <a class="nav-link" data-toggle="tab" href="#posts" role="tab" aria-selected="false">
-                                                Ta的投稿
-                                                <span class="badge badge-light m-l-5">0</span>
+                                                投稿文章
+                                                {if condition="{:count($article) gt 0"}
+                                                <span class="badge badge-success m-l-5">{:count($article)}</span>
+                                                {else/}
+                                                <span class="badge badge-light m-l-5">{:count($article)}</span>
+                                                {/if}
                                             </a>
                                         </li>
+
                                         <li class="flex-sm-fill text-sm-center nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#writeup" role="tab" aria-selected="false">
-                                                WriteUp
+                                            <a class="nav-link" data-toggle="tab" href="#awd" role="tab" aria-selected="false">
+                                                AWD比赛
                                                 <span class="badge badge-light m-l-5">0</span>
                                             </a>
 
@@ -182,13 +187,40 @@
                                     <div class="tab-pane fade" id="posts" role="tabpanel">
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <div class="text-center p-t-b-30">
-                                                    <img style="height: 120px;" src="/static/images/goods-cover.png" alt="">
-                                                    <p class="text-muted">暂无数据</p>
-                                                </div>                                                            </div>
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th width="80" class="text-center">#</th>
+                                                        <th>文章标题</th>
+                                                        <th width="80">发表时间</th>
+                                                        <th>操作</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                {volist id='ar' name='article' empty="<div class="text-center p-t-b-30">
+                                                <img style="height: 120px;" src="/static/images/goods-cover.png" alt="">
+                                                <p class="text-muted">暂无数据</p>
+                                            </div>"}
+
+                                                        <tr>
+                                                            <td class="text-center" scope="row">{$i}</td>
+                                                            <td>
+                                                                <a class="link-1" href="#">{$ar.title}</a>
+                                                            </td>
+                                                            <td>{$ar.create_time}</td>
+                                                            <td>
+                                                                <a href="/article/editcontribute/id/{$ar.id}" class="btn btn-outline-primary btn-sm">编辑</a>
+                                                                <a onclick="delarticle({$ar.id})" class="btn btn-outline-danger btn-sm">删除</a>
+                                                            </td>
+                                                        </tr>
+
+                                                {/volist}
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade" id="writeup" role="tabpanel">
+                                    <div class="tab-pane fade" id="awd" role="tabpanel">
                                         <div class="card-body">
                                             <ul class="list-group list-group-flush">
                                                 <div class="text-center p-t-b-30">
@@ -225,4 +257,34 @@
 {block name="js"}
 {JS href="__JS__/echarts.min.js"}
 {JS href="__JS__/info.js"}
+<script>
+
+    function delarticle(id)
+    {
+        $.ajax({
+            url:'/article/delarticle/id/'+id,
+            method: 'get',
+            success(res){
+                if(res.code === 1)
+                {
+                    swal(res.msg, '', "success").then(function () {
+                        location.reload()
+                    });
+                }else if(res.code === 0){
+                    swal(res.msg, '', "error").then(function () {
+                        location.reload()
+                    });
+                }else {
+                    swal('删除失败，未知错误！', '', "error").then(function () {
+                        location.reload()
+                    });
+                }
+            }
+        })
+    }
+
+
+
+</script>
+
 {/block}

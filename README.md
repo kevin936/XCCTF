@@ -2,17 +2,19 @@
 
 ## 项目介绍
 
+该项目是基于ThinPHP6框架+前端Bootstrap4+后端YFCMF+mysql5.6开发的,目前只是实现了部分功能，解题靶场只实现了静态flag提交对比，大家可加入一起完善动态题目，AWD等功能。
+
 ### 首页
 
-![image-20220605172948951](http://file.lmzyw.cn/image-20220605172948951.png)
+![image-20220605172948951](http://file.xcxan.cn/image-20220605172948951.png)
 
 ### 靶场页面
 
-![image-20220605172607245](http://file.lmzyw.cn/7396e780d91671ac8c35a7bd83cc19f.jpg)
+![image-20220605172607245](http://file.xcxan.cn/7396e780d91671ac8c35a7bd83cc19f.jpg)
 
 ### 博客首页
 
-![image-20220605172814567](http://file.lmzyw.cn/image-20220605172814567.png)
+![image-20220605172814567](http://file.xcxan.cn/image-20220605172814567.png)
 
 ## 使用说明
 
@@ -36,28 +38,3 @@
 
 2. 待添加
 
-   
-
-## 开源版介绍
-
-开源版是基于ThinPHP6框架+前端Bootstrap4+后端YFCMF+mysql5.6开发的。
-
-
-
-## 商业版介绍
-
-商业版采用的架构是前端Vue3+后端thinkphp6+mysql开发，实现前后端分离，后端可自由开发，前端与开源版模板累死，只是采用Vue3重构了前端。
-
-
-
-## 旗舰版介绍
-
-旗舰版主打CTF竞赛平台，前端同样使用Vue3构建，后端默认采用Thinkphp6搭建，后端可按需定制。
-
-
-
-## 打赏作者
-
-打赏五元以上的可加入开发交流群，入群申请请输入打赏流水订单号。管理审核后入群，设置入群门槛是为了防止某些白嫖党白嫖不满足，还要提各种要求。欢迎大家加入到开源开发团队一起完善，一起变得更好。
-
-<img src="http://img.lmzyw.cn/img/shoukuang.jpg" alt="shoukuang" style="zoom: 50%;height:500px" />

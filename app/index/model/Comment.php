@@ -10,7 +10,7 @@ class Comment extends model
 {
     public function users()
     {
-        return $this->hasOne('Users','id','from_uid')->bind(['username','frame_img','img']);
+        return $this->hasOne('Users','id','from_uid')->bind(['username','frame_img','img','ip_address']);
     }
     public function cids()
     {

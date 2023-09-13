@@ -12,7 +12,7 @@ class Article extends model
     {
         $data = Users::where('id',$value)->find();
 
-        return ["uid"=>$value,"username"=>$data['username']];
+        return ["uid"=>$value,"username"=>$data['username'],"ip"=>$data["ip_address"]];
     }
 
     public function Types()
